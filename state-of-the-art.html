@@ -1,0 +1,376 @@
+<!DOCTYPE HTML>
+<html lang="uk" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Аналіз предметної області - Система управління відкритими даними</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Система управління відкритими даними</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="Аналіз-предметної-області"><a class="header" href="#Аналіз-предметної-області">Аналіз предметної області</a></h1>
+<h2 id="Короткий-зміст"><a class="header" href="#Короткий-зміст">Короткий зміст</a></h2>
+<ol>
+<li><a href="#intro">Вступ</a></li>
+<li><a href="#1">Основні визначення</a>
+<ul>
+<li><a href="#2">Основні функції системи</a></li>
+<li><a href="#3">Ключові компоненти системи</a></li>
+<li><a href="#4">Основні проблеми предметної області</a></li>
+<li><a href="#5">Приклади використання системи</a></li>
+</ul>
+</li>
+<li><a href="#6">Підходи та способи вирішення завдання</a></li>
+<li><a href="#7">Порівняльна характеристика існуючих засобів вирішення завдання</a></li>
+<li><a href="#8">Висновки</a></li>
+<li><a href="#9">Посилання</a></li>
+</ol>
+<h2 id="Вступ"><a class="header" href="#Вступ"><span id="intro"> Вступ </span></a></h2>
+<p>Управління відкритими даними є ключовою складовою цифрової трансформації, яка сприяє прозорості, інноваціям та економічному розвитку. Відкриті дані використовуються в державному управлінні, науці, бізнесі та громадському секторі, дозволяючи створювати нові сервіси та оптимізувати існуючі процеси.</p>
+<h2 id="Основні-визначення"><a class="header" href="#Основні-визначення"><span id="1"> Основні визначення </span></a></h2>
+<ul>
+<li><strong>Відкриті дані</strong> – інформація, що доступна для вільного використання, поширення та модифікації.</li>
+<li><strong>API (Application Programming Interface)</strong> – інтерфейс для взаємодії з системою управління відкритими даними.</li>
+<li><strong>FURPS</strong> – модель аналізу якості програмних систем за п'ятьма критеріями: Functionality, Usability, Reliability, Performance, Supportability.</li>
+</ul>
+<h4 id="Стандарти-та-формати"><a class="header" href="#Стандарти-та-формати"><span id="1.1"> Стандарти та формати</span></a></h4>
+<ul>
+<li><strong>JSON, XML, RDF</strong> – широко використовуються для структурованого представлення даних.</li>
+<li><strong>CKAN, Data.gov</strong> – платформи, що забезпечують зберігання та доступ до відкритих даних.</li>
+<li><strong>Open Data Protocol (OData)</strong> – спрощує доступ до даних через API.</li>
+</ul>
+<h4 id="Моделі-управління-даними"><a class="header" href="#Моделі-управління-даними"><span id="1.2"> Моделі управління даними  </span></a></h4>
+<ul>
+<li><strong>Linked Open Data (LOD)</strong> – дозволяє об’єднувати дані з різних джерел у взаємопов’язану мережу.</li>
+<li><strong>Data-as-a-Service (DaaS)</strong> – надання даних у вигляді хмарного сервісу для споживачів.</li>
+<li><strong>API-інтерфейси</strong> – забезпечують швидкий доступ до відкритих даних для розробників.</li>
+</ul>
+<h4 id="Інноваційні-технології"><a class="header" href="#Інноваційні-технології"><span id="1.3"> Інноваційні технології  </span></a></h4>
+<ul>
+<li><strong>Big Data та штучний інтелект (AI)</strong> – використовуються для аналізу великих масивів відкритих даних.</li>
+<li><strong>Блокчейн</strong> – гарантує незмінність та перевірку достовірності даних.</li>
+<li><strong>Інтернет речей (IoT)</strong> – сприяє автоматичному збору та оновленню даних у режимі реального часу.</li>
+</ul>
+<h3 id="Виклики-у-сфері-відкритих-даних"><a class="header" href="#Виклики-у-сфері-відкритих-даних"><span id="1.4"> Виклики у сфері відкритих даних </span></a></h3>
+<ol>
+<li><strong>Якість даних</strong> – дублювання, застарілість та відсутність оновлень.</li>
+<li><strong>Безпека та конфіденційність</strong> – ризик витоку даних через відкриті API або несанкціонований доступ.</li>
+<li><strong>Стандартизація</strong> – різні країни та організації використовують несумісні формати.</li>
+<li><strong>Довіра до даних</strong> – необхідність перевірки достовірності джерел.</li>
+</ol>
+<h3 id="Приклади-використання"><a class="header" href="#Приклади-використання"><span id="1.5"> Приклади використання  </span></a></h3>
+<ul>
+<li><strong>США (Data.gov)</strong> – єдиний портал відкритих урядових даних.</li>
+<li><strong>ЄС (European Data Portal)</strong> – агрегує дані з різних державних установ.</li>
+<li><strong>Україна (data.gov.ua)</strong> – національна платформа відкритих даних.</li>
+</ul>
+<h3 id="Економічні-та-соціальні-аспекти"><a class="header" href="#Економічні-та-соціальні-аспекти"><span id="1.6"> Економічні та соціальні аспекти </span></a></h3>
+<ul>
+<li><strong>Підвищення прозорості</strong> – зменшення корупції через відкритий доступ до урядових рішень.</li>
+<li><strong>Розвиток бізнесу</strong> – створення нових сервісів та аналітичних продуктів.</li>
+<li><strong>Покращення науки та освіти</strong> – доступ до актуальних даних для досліджень та навчання.</li>
+</ul>
+<h3 id="Перспективи-розвитку"><a class="header" href="#Перспективи-розвитку"><span id="1.7"> Перспективи розвитку  </span></a></h3>
+<p>Майбутнє управління відкритими даними передбачає:</p>
+<ul>
+<li>Використання <strong>автоматизованих інструментів</strong> для аналізу даних.</li>
+<li>Поглиблену інтеграцію з <strong>штучним інтелектом</strong> для прогнозування тенденцій.</li>
+<li>Підвищення <strong>взаємодії між платформами</strong> завдяки вдосконаленим стандартам обміну даними.</li>
+</ul>
+<h3 id="Основні-функції-системи"><a class="header" href="#Основні-функції-системи"><span id="2"> Основні функції системи </span></a></h3>
+<ul>
+<li><strong>Збір даних</strong> – імпорт з різних джерел (державні реєстри, сенсори, бази даних тощо).</li>
+<li><strong>Структуризація та нормалізація</strong> – перетворення даних у єдиний формат.</li>
+<li><strong>Збереження та керування</strong> – організація та контроль якості даних.</li>
+<li><strong>Забезпечення доступу</strong> – API, веб-інтерфейси, портали відкритих даних.</li>
+<li><strong>Моніторинг та оновлення</strong> – підтримка актуальності інформації.</li>
+</ul>
+<h3 id="Ключові-компоненти-системи"><a class="header" href="#Ключові-компоненти-системи"><span id="3"> Ключові компоненти системи </span></a></h3>
+<ul>
+<li><strong>База даних</strong> – централізоване сховище для зберігання інформації.</li>
+<li><strong>Модуль імпорту</strong> – автоматизований механізм завантаження даних.</li>
+<li><strong>Система API</strong> – набір інтерфейсів для доступу до даних.</li>
+<li><strong>Модуль візуалізації</strong> – аналітичні панелі, графіки, звіти.</li>
+<li><strong>Система безпеки</strong> – контроль доступу та захист даних.</li>
+</ul>
+<h3 id="Основні-проблеми-предметної-області"><a class="header" href="#Основні-проблеми-предметної-області"><span id="4"> Основні проблеми предметної області </span></a></h3>
+<ul>
+<li><strong>Якість даних</strong> – неповнота, дублювання, застарілість інформації.</li>
+<li><strong>Формати та сумісність</strong> – несумісність даних через різні формати.</li>
+<li><strong>Доступність</strong> – забезпечення швидкого доступу до великих масивів даних.</li>
+<li><strong>Конфіденційність та безпека</strong> – захист від несанкціонованого доступу.</li>
+<li><strong>Автоматизація</strong> – мінімізація ручного втручання в оновлення даних.</li>
+</ul>
+<h3 id="Приклади-використання-системи"><a class="header" href="#Приклади-використання-системи"><span id="5"> Приклади використання системи </span></a></h3>
+<ul>
+<li><strong>Державні реєстри</strong> – публікація відкритих даних органами влади.</li>
+<li><strong>Муніципальні портали</strong> – інфраструктурні, екологічні, транспортні дані.</li>
+<li><strong>Наукові дослідження</strong> – аналіз великих масивів структурованих даних.</li>
+<li><strong>Бізнес-аналітика</strong> – використання відкритих даних для досліджень.</li>
+</ul>
+<h2 id="Підходи-та-способи-вирішення-завдання"><a class="header" href="#Підходи-та-способи-вирішення-завдання"><span id="6"> Підходи та способи вирішення завдання </span></a></h2>
+<ul>
+<li>Використання централізованої бази даних для зберігання відкритих даних.</li>
+<li>Впровадження API для автоматизованого доступу до даних.</li>
+<li>Використання стандартів відкритих даних (OGD, DCAT, CKAN).</li>
+<li>Реалізація механізму візуалізації даних.</li>
+</ul>
+<h2 id="Порівняльна-характеристика-існуючих-засобів-вирішення-завдання"><a class="header" href="#Порівняльна-характеристика-існуючих-засобів-вирішення-завдання"><span id="7"> Порівняльна характеристика існуючих засобів вирішення завдання </span></a></h2>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left">Властивість</th><th style="text-align: left">Критерій</th><th style="text-align: center">CKAN</th><th style="text-align: center">Socrata</th><th style="text-align: center">Junar</th><th style="text-align: center">Dataverse</th><th style="text-align: center">OpenDataSoft</th></tr></thead><tbody>
+<tr><td style="text-align: left"><strong>Functionality</strong></td><td style="text-align: left"></td><td style="text-align: center"></td><td style="text-align: center"></td><td style="text-align: center"></td><td style="text-align: center"></td><td style="text-align: center"></td></tr>
+<tr><td style="text-align: left"></td><td style="text-align: left">Каталогізація</td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td></tr>
+<tr><td style="text-align: left"></td><td style="text-align: left">Пошук</td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td></tr>
+<tr><td style="text-align: left"></td><td style="text-align: left">Перегляд даних</td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td></tr>
+<tr><td style="text-align: left"></td><td style="text-align: left">API</td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td></tr>
+<tr><td style="text-align: left"></td><td style="text-align: left">Управління користувачами</td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td></tr>
+<tr><td style="text-align: left"></td><td style="text-align: left">Візуалізація</td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td><td style="text-align: center"></td><td style="text-align: center">✔️</td></tr>
+<tr><td style="text-align: left"></td><td style="text-align: left">Геопросторова підтримка</td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td><td style="text-align: center"></td><td style="text-align: center">✔️</td></tr>
+<tr><td style="text-align: left"></td><td style="text-align: left">Контроль версій</td><td style="text-align: center"></td><td style="text-align: center"></td><td style="text-align: center"></td><td style="text-align: center">✔️</td><td style="text-align: center"></td></tr>
+<tr><td style="text-align: left"></td><td style="text-align: left">Цитування даних</td><td style="text-align: center"></td><td style="text-align: center"></td><td style="text-align: center"></td><td style="text-align: center">✔️</td><td style="text-align: center"></td></tr>
+<tr><td style="text-align: left"><strong>Usability</strong></td><td style="text-align: left"></td><td style="text-align: center"></td><td style="text-align: center"></td><td style="text-align: center"></td><td style="text-align: center"></td><td style="text-align: center"></td></tr>
+<tr><td style="text-align: left"></td><td style="text-align: left">Дружній інтерфейс</td><td style="text-align: center"></td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td><td style="text-align: center"></td><td style="text-align: center">✔️</td></tr>
+<tr><td style="text-align: left"></td><td style="text-align: left">Інтуїтивно зрозуміле керування</td><td style="text-align: center"></td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td><td style="text-align: center"></td><td style="text-align: center">✔️</td></tr>
+<tr><td style="text-align: left"></td><td style="text-align: left">Легке завантаження та керування даними</td><td style="text-align: center"></td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td><td style="text-align: center"></td><td style="text-align: center">✔️</td></tr>
+<tr><td style="text-align: left"><strong>Reliability</strong></td><td style="text-align: left"></td><td style="text-align: center"></td><td style="text-align: center"></td><td style="text-align: center"></td><td style="text-align: center"></td><td style="text-align: center"></td></tr>
+<tr><td style="text-align: left"></td><td style="text-align: left">Забезпечується хмарною інфраструктурою (PaaS)</td><td style="text-align: center"></td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td><td style="text-align: center"></td><td style="text-align: center"></td></tr>
+<tr><td style="text-align: left"></td><td style="text-align: left">Автоматичне резервне копіювання та відновлення даних</td><td style="text-align: center"></td><td style="text-align: center">✔️</td><td style="text-align: center"></td><td style="text-align: center"></td><td style="text-align: center"></td></tr>
+<tr><td style="text-align: left"></td><td style="text-align: left">Велике та активне співтовариство підтримки</td><td style="text-align: center">✔️</td><td style="text-align: center"></td><td style="text-align: center"></td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td></tr>
+<tr><td style="text-align: left"><strong>Performance</strong></td><td style="text-align: left"></td><td style="text-align: center"></td><td style="text-align: center"></td><td style="text-align: center"></td><td style="text-align: center"></td><td style="text-align: center"></td></tr>
+<tr><td style="text-align: left"></td><td style="text-align: left">Висока продуктивність</td><td style="text-align: center"></td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td><td style="text-align: center"></td><td style="text-align: center">✔️</td></tr>
+<tr><td style="text-align: left"></td><td style="text-align: left">Оптимізована для обробки великих обсягів даних</td><td style="text-align: center"></td><td style="text-align: center">✔️</td><td style="text-align: center"></td><td style="text-align: center"></td><td style="text-align: center">✔️</td></tr>
+<tr><td style="text-align: left"></td><td style="text-align: left">Масштабована архітектура</td><td style="text-align: center"></td><td style="text-align: center">✔️</td><td style="text-align: center"></td><td style="text-align: center"></td><td style="text-align: center">✔️</td></tr>
+<tr><td style="text-align: left"><strong>Supportability</strong></td><td style="text-align: left"></td><td style="text-align: center"></td><td style="text-align: center"></td><td style="text-align: center"></td><td style="text-align: center"></td><td style="text-align: center"></td></tr>
+<tr><td style="text-align: left"></td><td style="text-align: left">Комерційна підтримка від розробника платформи</td><td style="text-align: center"></td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td><td style="text-align: center"></td><td style="text-align: center">✔️</td></tr>
+<tr><td style="text-align: left"></td><td style="text-align: left">Доступна документація</td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td></tr>
+<tr><td style="text-align: left"></td><td style="text-align: left">Підтримка від спільноти</td><td style="text-align: center">✔️</td><td style="text-align: center"></td><td style="text-align: center"></td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td></tr>
+</tbody></table>
+</div>
+<h2 id="Висновки"><a class="header" href="#Висновки"><span id="8"> <strong>Висновки</strong> </span></a></h2>
+<p><strong>Аналіз предметної області</strong> систем управління відкритими даними показав, що існуючі рішення, такі як CKAN, Socrata, Junar та Dataverse, мають широкий набір функцій для збору, збереження, обробки та публікації відкритих даних. Проте вони мають певні обмеження, зокрема у сфері користувацького досвіду, масштабованості, безпеки та підтримки специфічних форматів даних.</p>
+<p>Основні проблеми, пов'язані з управлінням відкритими даними, включають якість та актуальність інформації, несумісність форматів, забезпечення швидкого доступу до великих обсягів даних та питання конфіденційності. Виявлено, що існуючі системи не завжди можуть забезпечити достатній рівень автоматизації процесів оновлення даних та їхньої структуризації.</p>
+<p>Для ефективного вирішення цих проблем доцільно розробити нову систему управління відкритими даними, яка матиме такі ключові переваги:</p>
+<ul>
+<li>Покращена інтеграція зі сторонніми сервісами через розширене API.</li>
+<li>Автоматизовані механізми оновлення та валідації даних.</li>
+<li>Оптимізована архітектура для роботи з великими масивами інформації.</li>
+<li>Гнучка система безпеки з можливістю контролю доступу.</li>
+<li>Інтуїтивно зрозумілий інтерфейс для користувачів різних категорій.</li>
+</ul>
+<p>Таким чином, розробка нової системи управління відкритими даними є виправданою з точки зору підвищення ефективності роботи з відкритими даними, поліпшення їхньої доступності та забезпечення більшої відповідності сучасним вимогам безпеки та автоматизації.</p>
+<h2 id="Посилання"><a class="header" href="#Посилання"><span id="9"> Посилання </span></a></h2>
+<p>•	<a href="https://ckan.org/">CKAN</a> <br />
+•	<a href="https://dev.socrata.com/">Socrata</a> <br />
+•	<a href="https://junar.com/">Junar</a> <br />
+•	<a href="https://dataverse.org/">Dataverse</a> <br />
+•	<a href="https://www.opendatasoft.com/">OpenDataSoft</a> <br />
+•	<a href="https://opendatahandbook.org/">Open Data Handbook</a></p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="requirements.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="stakeholders-needs.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="requirements.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="stakeholders-needs.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

@@ -1,0 +1,988 @@
+<!DOCTYPE HTML>
+<html lang="uk" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Система управління відкритими даними</title>
+        <meta name="robots" content="noindex">
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Система управління відкритими даними</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="Виконали"><a class="header" href="#Виконали">Виконали</a></h1>
+<p><em>студенти 2-го курсу, групи ІО-34</em><br />
+<strong>Непорожній Максим</strong> Telegram:<a href="https://t.me/lazyotters">@lazyotters</a> - тімлід<br />
+<strong>Затилюк Олег</strong> Telegram: <a href="https://t.me/bobsledbonanza">@bobsledbonanza</a><br />
+<strong>Колєснік Володимир</strong> Telegram: <a href="https://t.me/OIDOS12">@OIDOS12</a><br />
+<strong>Коваль Максим</strong> Telegram: <a href="https://t.me/Makc_Koval">@Makc_Koval</a><br />
+<strong>Науменко Марія</strong> Telegram: <a href="https://t.me/monterdasmo">@monterdasmo</a><br />
+<strong>Святний Тимофій</strong> Telegram: <a href="https://t.me/nevwxr">@nevwxr</a><br />
+<strong>Янчук Артур</strong> Telegram: <a href="https://t.me/RutraArtur0">@RutraArtur0</a></p>
+<h1 id="Керівник"><a class="header" href="#Керівник">Керівник</a></h1>
+<p><em>доцент кафедри ОТ ФІОТ, к.т.н., доцент</em> <strong>Андрій БОЛДАК</strong><br />
+Telegram: <a href="https://t.me/a_boldak">@a_boldak</a></p>
+<p><a href="https://kpi.ua/">НТУУ "КИЇВСЬКИЙ ПОЛІТЕХНІЧНИЙ ІНСТИТУТ імені ІГОРЯ СІКОРСЬКОГО</a></p>
+<p><a href="https://fiot.kpi.ua/">Факультет інформатики та обчислювальної техніки</a></p>
+<p><a href="https://comsys.kpi.ua/">Кафедра обчислювальної техніки</a></p>
+<p>Київ</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="Вступ"><a class="header" href="#Вступ">Вступ</a></h1>
+<div style="text-align: justify;">
+Сучасний світ усе більше ґрунтується на відкритих даних, які є важливим ресурсом для різних галузей – від науки та бізнесу до громадянського суспільства. Ефективне управління такими даними дозволяє не лише підвищити прозорість інформації, а й сприяє прийняттю обґрунтованих рішень, автоматизації процесів та розвитку новітніх технологій.
+<p>Цей репозиторій містить універсальну платформу для керування відкритими даними, яка забезпечує вільний доступ до інформації без необхідності реєстрації. Завдяки цьому будь-який користувач може використовувати систему для перегляду, внесення змін та завантаження необхідних відомостей. Гнучкість та відкритість даних дозволяють застосовувати платформу в різних сферах, що робить її затребуваною серед розробників, дослідників і аналітиків.</p>
+<p>Для організації ефективної роботи передбачено чіткий розподіл ролей користувачів. Адміністратори мають змогу додавати, редагувати та видаляти дані, тоді як звичайні користувачі можуть переглядати інформацію, а також вносити певні зміни відповідно до наданих їм прав. Такий підхід забезпечує контрольованість процесу управління даними, зберігаючи баланс між відкритістю та безпекою.</p>
+<p>Окрім функціональності, особлива увага приділена зручності використання платформи. Інтуїтивно зрозумілий інтерфейс дозволяє легко орієнтуватися в системі, здійснювати пошук, сортування та фільтрацію інформації. Для адміністраторів створено ефективний інструмент керування контентом, що спрощує процес оновлення та підтримки бази даних.</p>
+<p>Таким чином, ця платформа є потужним рішенням для роботи з відкритими даними, що поєднує доступність, функціональність і зручність використання. Вона стане корисним інструментом для широкого кола користувачів, які працюють з інформацією та прагнуть максимально ефективно її використовувати.</p>
+</div>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="Розроблення-загальних-вимог-до-системи"><a class="header" href="#Розроблення-загальних-вимог-до-системи">Розроблення загальних вимог до системи</a></h1>
+<ul>
+<li><a href="./state-of-the-art.html">Аналіз предметної області</a></li>
+<li><a href="./stakeholders-needs.html">Запити зацікавлених осіб</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="Аналіз-предметної-області"><a class="header" href="#Аналіз-предметної-області">Аналіз предметної області</a></h1>
+<h2 id="Короткий-зміст"><a class="header" href="#Короткий-зміст">Короткий зміст</a></h2>
+<ol>
+<li><a href="state-of-the-art.html#intro">Вступ</a></li>
+<li><a href="state-of-the-art.html#1">Основні визначення</a>
+<ul>
+<li><a href="state-of-the-art.html#2">Основні функції системи</a></li>
+<li><a href="state-of-the-art.html#3">Ключові компоненти системи</a></li>
+<li><a href="state-of-the-art.html#4">Основні проблеми предметної області</a></li>
+<li><a href="state-of-the-art.html#5">Приклади використання системи</a></li>
+</ul>
+</li>
+<li><a href="state-of-the-art.html#6">Підходи та способи вирішення завдання</a></li>
+<li><a href="state-of-the-art.html#7">Порівняльна характеристика існуючих засобів вирішення завдання</a></li>
+<li><a href="state-of-the-art.html#8">Висновки</a></li>
+<li><a href="state-of-the-art.html#9">Посилання</a></li>
+</ol>
+<h2 id="Вступ-1"><a class="header" href="#Вступ-1"><span id="intro"> Вступ </span></a></h2>
+<p>Управління відкритими даними є ключовою складовою цифрової трансформації, яка сприяє прозорості, інноваціям та економічному розвитку. Відкриті дані використовуються в державному управлінні, науці, бізнесі та громадському секторі, дозволяючи створювати нові сервіси та оптимізувати існуючі процеси.</p>
+<h2 id="Основні-визначення"><a class="header" href="#Основні-визначення"><span id="1"> Основні визначення </span></a></h2>
+<ul>
+<li><strong>Відкриті дані</strong> – інформація, що доступна для вільного використання, поширення та модифікації.</li>
+<li><strong>API (Application Programming Interface)</strong> – інтерфейс для взаємодії з системою управління відкритими даними.</li>
+<li><strong>FURPS</strong> – модель аналізу якості програмних систем за п'ятьма критеріями: Functionality, Usability, Reliability, Performance, Supportability.</li>
+</ul>
+<h4 id="Стандарти-та-формати"><a class="header" href="#Стандарти-та-формати"><span id="1.1"> Стандарти та формати</span></a></h4>
+<ul>
+<li><strong>JSON, XML, RDF</strong> – широко використовуються для структурованого представлення даних.</li>
+<li><strong>CKAN, Data.gov</strong> – платформи, що забезпечують зберігання та доступ до відкритих даних.</li>
+<li><strong>Open Data Protocol (OData)</strong> – спрощує доступ до даних через API.</li>
+</ul>
+<h4 id="Моделі-управління-даними"><a class="header" href="#Моделі-управління-даними"><span id="1.2"> Моделі управління даними  </span></a></h4>
+<ul>
+<li><strong>Linked Open Data (LOD)</strong> – дозволяє об’єднувати дані з різних джерел у взаємопов’язану мережу.</li>
+<li><strong>Data-as-a-Service (DaaS)</strong> – надання даних у вигляді хмарного сервісу для споживачів.</li>
+<li><strong>API-інтерфейси</strong> – забезпечують швидкий доступ до відкритих даних для розробників.</li>
+</ul>
+<h4 id="Інноваційні-технології"><a class="header" href="#Інноваційні-технології"><span id="1.3"> Інноваційні технології  </span></a></h4>
+<ul>
+<li><strong>Big Data та штучний інтелект (AI)</strong> – використовуються для аналізу великих масивів відкритих даних.</li>
+<li><strong>Блокчейн</strong> – гарантує незмінність та перевірку достовірності даних.</li>
+<li><strong>Інтернет речей (IoT)</strong> – сприяє автоматичному збору та оновленню даних у режимі реального часу.</li>
+</ul>
+<h3 id="Виклики-у-сфері-відкритих-даних"><a class="header" href="#Виклики-у-сфері-відкритих-даних"><span id="1.4"> Виклики у сфері відкритих даних </span></a></h3>
+<ol>
+<li><strong>Якість даних</strong> – дублювання, застарілість та відсутність оновлень.</li>
+<li><strong>Безпека та конфіденційність</strong> – ризик витоку даних через відкриті API або несанкціонований доступ.</li>
+<li><strong>Стандартизація</strong> – різні країни та організації використовують несумісні формати.</li>
+<li><strong>Довіра до даних</strong> – необхідність перевірки достовірності джерел.</li>
+</ol>
+<h3 id="Приклади-використання"><a class="header" href="#Приклади-використання"><span id="1.5"> Приклади використання  </span></a></h3>
+<ul>
+<li><strong>США (Data.gov)</strong> – єдиний портал відкритих урядових даних.</li>
+<li><strong>ЄС (European Data Portal)</strong> – агрегує дані з різних державних установ.</li>
+<li><strong>Україна (data.gov.ua)</strong> – національна платформа відкритих даних.</li>
+</ul>
+<h3 id="Економічні-та-соціальні-аспекти"><a class="header" href="#Економічні-та-соціальні-аспекти"><span id="1.6"> Економічні та соціальні аспекти </span></a></h3>
+<ul>
+<li><strong>Підвищення прозорості</strong> – зменшення корупції через відкритий доступ до урядових рішень.</li>
+<li><strong>Розвиток бізнесу</strong> – створення нових сервісів та аналітичних продуктів.</li>
+<li><strong>Покращення науки та освіти</strong> – доступ до актуальних даних для досліджень та навчання.</li>
+</ul>
+<h3 id="Перспективи-розвитку"><a class="header" href="#Перспективи-розвитку"><span id="1.7"> Перспективи розвитку  </span></a></h3>
+<p>Майбутнє управління відкритими даними передбачає:</p>
+<ul>
+<li>Використання <strong>автоматизованих інструментів</strong> для аналізу даних.</li>
+<li>Поглиблену інтеграцію з <strong>штучним інтелектом</strong> для прогнозування тенденцій.</li>
+<li>Підвищення <strong>взаємодії між платформами</strong> завдяки вдосконаленим стандартам обміну даними.</li>
+</ul>
+<h3 id="Основні-функції-системи"><a class="header" href="#Основні-функції-системи"><span id="2"> Основні функції системи </span></a></h3>
+<ul>
+<li><strong>Збір даних</strong> – імпорт з різних джерел (державні реєстри, сенсори, бази даних тощо).</li>
+<li><strong>Структуризація та нормалізація</strong> – перетворення даних у єдиний формат.</li>
+<li><strong>Збереження та керування</strong> – організація та контроль якості даних.</li>
+<li><strong>Забезпечення доступу</strong> – API, веб-інтерфейси, портали відкритих даних.</li>
+<li><strong>Моніторинг та оновлення</strong> – підтримка актуальності інформації.</li>
+</ul>
+<h3 id="Ключові-компоненти-системи"><a class="header" href="#Ключові-компоненти-системи"><span id="3"> Ключові компоненти системи </span></a></h3>
+<ul>
+<li><strong>База даних</strong> – централізоване сховище для зберігання інформації.</li>
+<li><strong>Модуль імпорту</strong> – автоматизований механізм завантаження даних.</li>
+<li><strong>Система API</strong> – набір інтерфейсів для доступу до даних.</li>
+<li><strong>Модуль візуалізації</strong> – аналітичні панелі, графіки, звіти.</li>
+<li><strong>Система безпеки</strong> – контроль доступу та захист даних.</li>
+</ul>
+<h3 id="Основні-проблеми-предметної-області"><a class="header" href="#Основні-проблеми-предметної-області"><span id="4"> Основні проблеми предметної області </span></a></h3>
+<ul>
+<li><strong>Якість даних</strong> – неповнота, дублювання, застарілість інформації.</li>
+<li><strong>Формати та сумісність</strong> – несумісність даних через різні формати.</li>
+<li><strong>Доступність</strong> – забезпечення швидкого доступу до великих масивів даних.</li>
+<li><strong>Конфіденційність та безпека</strong> – захист від несанкціонованого доступу.</li>
+<li><strong>Автоматизація</strong> – мінімізація ручного втручання в оновлення даних.</li>
+</ul>
+<h3 id="Приклади-використання-системи"><a class="header" href="#Приклади-використання-системи"><span id="5"> Приклади використання системи </span></a></h3>
+<ul>
+<li><strong>Державні реєстри</strong> – публікація відкритих даних органами влади.</li>
+<li><strong>Муніципальні портали</strong> – інфраструктурні, екологічні, транспортні дані.</li>
+<li><strong>Наукові дослідження</strong> – аналіз великих масивів структурованих даних.</li>
+<li><strong>Бізнес-аналітика</strong> – використання відкритих даних для досліджень.</li>
+</ul>
+<h2 id="Підходи-та-способи-вирішення-завдання"><a class="header" href="#Підходи-та-способи-вирішення-завдання"><span id="6"> Підходи та способи вирішення завдання </span></a></h2>
+<ul>
+<li>Використання централізованої бази даних для зберігання відкритих даних.</li>
+<li>Впровадження API для автоматизованого доступу до даних.</li>
+<li>Використання стандартів відкритих даних (OGD, DCAT, CKAN).</li>
+<li>Реалізація механізму візуалізації даних.</li>
+</ul>
+<h2 id="Порівняльна-характеристика-існуючих-засобів-вирішення-завдання"><a class="header" href="#Порівняльна-характеристика-існуючих-засобів-вирішення-завдання"><span id="7"> Порівняльна характеристика існуючих засобів вирішення завдання </span></a></h2>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left">Властивість</th><th style="text-align: left">Критерій</th><th style="text-align: center">CKAN</th><th style="text-align: center">Socrata</th><th style="text-align: center">Junar</th><th style="text-align: center">Dataverse</th><th style="text-align: center">OpenDataSoft</th></tr></thead><tbody>
+<tr><td style="text-align: left"><strong>Functionality</strong></td><td style="text-align: left"></td><td style="text-align: center"></td><td style="text-align: center"></td><td style="text-align: center"></td><td style="text-align: center"></td><td style="text-align: center"></td></tr>
+<tr><td style="text-align: left"></td><td style="text-align: left">Каталогізація</td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td></tr>
+<tr><td style="text-align: left"></td><td style="text-align: left">Пошук</td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td></tr>
+<tr><td style="text-align: left"></td><td style="text-align: left">Перегляд даних</td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td></tr>
+<tr><td style="text-align: left"></td><td style="text-align: left">API</td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td></tr>
+<tr><td style="text-align: left"></td><td style="text-align: left">Управління користувачами</td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td></tr>
+<tr><td style="text-align: left"></td><td style="text-align: left">Візуалізація</td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td><td style="text-align: center"></td><td style="text-align: center">✔️</td></tr>
+<tr><td style="text-align: left"></td><td style="text-align: left">Геопросторова підтримка</td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td><td style="text-align: center"></td><td style="text-align: center">✔️</td></tr>
+<tr><td style="text-align: left"></td><td style="text-align: left">Контроль версій</td><td style="text-align: center"></td><td style="text-align: center"></td><td style="text-align: center"></td><td style="text-align: center">✔️</td><td style="text-align: center"></td></tr>
+<tr><td style="text-align: left"></td><td style="text-align: left">Цитування даних</td><td style="text-align: center"></td><td style="text-align: center"></td><td style="text-align: center"></td><td style="text-align: center">✔️</td><td style="text-align: center"></td></tr>
+<tr><td style="text-align: left"><strong>Usability</strong></td><td style="text-align: left"></td><td style="text-align: center"></td><td style="text-align: center"></td><td style="text-align: center"></td><td style="text-align: center"></td><td style="text-align: center"></td></tr>
+<tr><td style="text-align: left"></td><td style="text-align: left">Дружній інтерфейс</td><td style="text-align: center"></td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td><td style="text-align: center"></td><td style="text-align: center">✔️</td></tr>
+<tr><td style="text-align: left"></td><td style="text-align: left">Інтуїтивно зрозуміле керування</td><td style="text-align: center"></td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td><td style="text-align: center"></td><td style="text-align: center">✔️</td></tr>
+<tr><td style="text-align: left"></td><td style="text-align: left">Легке завантаження та керування даними</td><td style="text-align: center"></td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td><td style="text-align: center"></td><td style="text-align: center">✔️</td></tr>
+<tr><td style="text-align: left"><strong>Reliability</strong></td><td style="text-align: left"></td><td style="text-align: center"></td><td style="text-align: center"></td><td style="text-align: center"></td><td style="text-align: center"></td><td style="text-align: center"></td></tr>
+<tr><td style="text-align: left"></td><td style="text-align: left">Забезпечується хмарною інфраструктурою (PaaS)</td><td style="text-align: center"></td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td><td style="text-align: center"></td><td style="text-align: center"></td></tr>
+<tr><td style="text-align: left"></td><td style="text-align: left">Автоматичне резервне копіювання та відновлення даних</td><td style="text-align: center"></td><td style="text-align: center">✔️</td><td style="text-align: center"></td><td style="text-align: center"></td><td style="text-align: center"></td></tr>
+<tr><td style="text-align: left"></td><td style="text-align: left">Велике та активне співтовариство підтримки</td><td style="text-align: center">✔️</td><td style="text-align: center"></td><td style="text-align: center"></td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td></tr>
+<tr><td style="text-align: left"><strong>Performance</strong></td><td style="text-align: left"></td><td style="text-align: center"></td><td style="text-align: center"></td><td style="text-align: center"></td><td style="text-align: center"></td><td style="text-align: center"></td></tr>
+<tr><td style="text-align: left"></td><td style="text-align: left">Висока продуктивність</td><td style="text-align: center"></td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td><td style="text-align: center"></td><td style="text-align: center">✔️</td></tr>
+<tr><td style="text-align: left"></td><td style="text-align: left">Оптимізована для обробки великих обсягів даних</td><td style="text-align: center"></td><td style="text-align: center">✔️</td><td style="text-align: center"></td><td style="text-align: center"></td><td style="text-align: center">✔️</td></tr>
+<tr><td style="text-align: left"></td><td style="text-align: left">Масштабована архітектура</td><td style="text-align: center"></td><td style="text-align: center">✔️</td><td style="text-align: center"></td><td style="text-align: center"></td><td style="text-align: center">✔️</td></tr>
+<tr><td style="text-align: left"><strong>Supportability</strong></td><td style="text-align: left"></td><td style="text-align: center"></td><td style="text-align: center"></td><td style="text-align: center"></td><td style="text-align: center"></td><td style="text-align: center"></td></tr>
+<tr><td style="text-align: left"></td><td style="text-align: left">Комерційна підтримка від розробника платформи</td><td style="text-align: center"></td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td><td style="text-align: center"></td><td style="text-align: center">✔️</td></tr>
+<tr><td style="text-align: left"></td><td style="text-align: left">Доступна документація</td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td></tr>
+<tr><td style="text-align: left"></td><td style="text-align: left">Підтримка від спільноти</td><td style="text-align: center">✔️</td><td style="text-align: center"></td><td style="text-align: center"></td><td style="text-align: center">✔️</td><td style="text-align: center">✔️</td></tr>
+</tbody></table>
+</div>
+<h2 id="Висновки"><a class="header" href="#Висновки"><span id="8"> <strong>Висновки</strong> </span></a></h2>
+<p><strong>Аналіз предметної області</strong> систем управління відкритими даними показав, що існуючі рішення, такі як CKAN, Socrata, Junar та Dataverse, мають широкий набір функцій для збору, збереження, обробки та публікації відкритих даних. Проте вони мають певні обмеження, зокрема у сфері користувацького досвіду, масштабованості, безпеки та підтримки специфічних форматів даних.</p>
+<p>Основні проблеми, пов'язані з управлінням відкритими даними, включають якість та актуальність інформації, несумісність форматів, забезпечення швидкого доступу до великих обсягів даних та питання конфіденційності. Виявлено, що існуючі системи не завжди можуть забезпечити достатній рівень автоматизації процесів оновлення даних та їхньої структуризації.</p>
+<p>Для ефективного вирішення цих проблем доцільно розробити нову систему управління відкритими даними, яка матиме такі ключові переваги:</p>
+<ul>
+<li>Покращена інтеграція зі сторонніми сервісами через розширене API.</li>
+<li>Автоматизовані механізми оновлення та валідації даних.</li>
+<li>Оптимізована архітектура для роботи з великими масивами інформації.</li>
+<li>Гнучка система безпеки з можливістю контролю доступу.</li>
+<li>Інтуїтивно зрозумілий інтерфейс для користувачів різних категорій.</li>
+</ul>
+<p>Таким чином, розробка нової системи управління відкритими даними є виправданою з точки зору підвищення ефективності роботи з відкритими даними, поліпшення їхньої доступності та забезпечення більшої відповідності сучасним вимогам безпеки та автоматизації.</p>
+<h2 id="Посилання"><a class="header" href="#Посилання"><span id="9"> Посилання </span></a></h2>
+<p>•	<a href="https://ckan.org/">CKAN</a> <br />
+•	<a href="https://dev.socrata.com/">Socrata</a> <br />
+•	<a href="https://junar.com/">Junar</a> <br />
+•	<a href="https://dataverse.org/">Dataverse</a> <br />
+•	<a href="https://www.opendatasoft.com/">OpenDataSoft</a> <br />
+•	<a href="https://opendatahandbook.org/">Open Data Handbook</a></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="Запити-зацікавлених-осіб"><a class="header" href="#Запити-зацікавлених-осіб">Запити зацікавлених осіб</a></h1>
+<h2 id="Вступ-2"><a class="header" href="#Вступ-2">Вступ</a></h2>
+<p>Запити зацікавлених сторін відіграють важливу роль у процесі створення програмного продукту, адже вони відображають потреби та очікування різних категорій користувачів. Цей документ містить перелік вимог, висунутих причетними особами до системи керування відкритими даними, яка призначена для зберігання, обробки та оперативного доступу до інформації. Детальне опрацювання наведених запитів дозволить досягти спільного бачення вимог серед усіх учасників процесу та сприятиме успішному впровадженню системи.</p>
+<h3 id="Мета"><a class="header" href="#Мета">Мета</a></h3>
+<p>Цей документ має на меті надати детальний опис програмного продукту, висвітлити його ключові бізнес-процеси, а також окреслити коло осіб, залучених до цих процесів, із визначенням їхніх прав доступу до системи. Крім цього, документ передбачає проведення аналізу продукту, визначаючи його переваги та недоліки. Також у документі сформульовані основні цілі та принципи, які є керівними під час створення системи управління відкритими даними. Вона повинна забезпечити максимально зручну та ефективну функціональність як для користувачів, так і для розробників, сприяючи вільному доступу до публічних даних і продуктивному їх використанню.</p>
+<h3 id="Контекст"><a class="header" href="#Контекст">Контекст</a></h3>
+<p>Документ розглядає особливості взаємодії різних груп користувачів із системою управління відкритими даними, аналізуючи їхні характеристики, потреби та вплив на функціонування системи. В документі наведені основні функціональні вимоги до продукту, необхідна інформація для початку проєктування, описані бізнес-кейси, наданий загальний огляд продукту та здійснено аналіз вимог відповідно до моделі якості програмного забезпечення FURPS.</p>
+<h3 id="Основні-визначення-та-скорочення"><a class="header" href="#Основні-визначення-та-скорочення">Основні визначення та скорочення</a></h3>
+<p><a href="https://en.wikipedia.org/wiki/Stakeholder_(corporate)">Зацікавлена сторона</a> (англ. Stakeholder) – фізична або юридична особа чи організація, яка може впливати на продукт або зазнавати впливу від нього.</p>
+<p><a href="https://en.wikipedia.org/wiki/User_(computing)">Користувач</a> (англ. User) – зацікавлена особа, яка безпосередньо взаємодіє з продуктом для виконання певних завдань.</p>
+<p><a href="https://en.wikipedia.org/wiki/Database_administrator">Адміністратор</a> (англ. Administrator) – зацікавлена особа, що відповідає за підтримку, налаштування та контроль за правильним функціонуванням програмного продукту.</p>
+<p><a href="https://en.wikipedia.org/wiki/Database#Database_management_system">Система управління базами даних</a> (англ. Database management system, DBMS) – програмний комплекс, призначений для створення, підтримки, організації та керування доступом до баз даних.</p>
+<p><a href="https://en.wikipedia.org/wiki/Open_data">Відкриті дані</a> (англ. Open data) – загальнодоступна інформація, яку будь-яка особа може вільно використовувати, поширювати та обробляти для будь-яких цілей.</p>
+<p><a href="https://en.wikipedia.org/wiki/FURPS">FURPS</a> (Functionality, Usability, Reliability, Performance, Supportability) – модель характеристик якості програмного забезпечення, що охоплює функціональність, практичність, надійність, продуктивність та підтримуваність.</p>
+<p><a href="https://en.wikipedia.org/wiki/User_(computing)#User_account">Обліковий запис</a> (англ. Account) – набір інформації про користувача, що визначає його особисті налаштування, засоби та рівень доступу до багатокористувацької системи.</p>
+<p><a href="https://en.wikipedia.org/wiki/User_interface">Інтерфейс користувача</a> (англ. User Interface, UI) – сукупність програмних і графічних засобів, що забезпечує комфортну та ефективну взаємодію користувача з інформаційною системою. Включає в себе навігацію, вікна, елементи керування, налаштування та засоби візуалізації інформації.</p>
+<p><a href="https://en.wikipedia.org/wiki/Access_control">Керування доступом</a> (англ. Access control) – механізми, що регулюють доступ користувачів до ресурсів системи, залежно від їх ролей, прав та привілеїв.</p>
+<p><a href="https://en.wikipedia.org/wiki/API">API</a> (англ. Application Programming Interface) – набір визначень та протоколів, що використовується для створення, взаємодії та інтеграції програмних продуктів або компонентів.</p>
+<p><a href="https://en.wikipedia.org/wiki/Authentication">Автентифікація</a> (англ. Authentication) – процес підтвердження особистості користувача, який намагається отримати доступ до системи або її ресурсів.</p>
+<h3 id="Посилання-1"><a class="header" href="#Посилання-1">Посилання</a></h3>
+<ol>
+<li>
+<p><a href="https://en.wikipedia.org/wiki/Stakeholder_(corporate)">Зацікавлена сторона</a></p>
+</li>
+<li>
+<p><a href="https://en.wikipedia.org/wiki/User_(computing)">Користувач</a></p>
+</li>
+<li>
+<p><a href="https://en.wikipedia.org/wiki/Database_administrator">Адміністратор</a></p>
+</li>
+<li>
+<p><a href="https://en.wikipedia.org/wiki/Database#Database_management_system">Система управління базами даних</a></p>
+</li>
+<li>
+<p><a href="https://en.wikipedia.org/wiki/Open_data">Відкриті дані</a></p>
+</li>
+<li>
+<p><a href="https://en.wikipedia.org/wiki/FURPS">FURPS</a></p>
+</li>
+<li>
+<p><a href="https://en.wikipedia.org/wiki/User_(computing)#User_account">Обліковий запис</a></p>
+</li>
+<li>
+<p><a href="https://en.wikipedia.org/wiki/User_interface">Інтерфейс користувача</a></p>
+</li>
+<li>
+<p><a href="https://en.wikipedia.org/wiki/Access_control">Керування доступом</a></p>
+</li>
+<li>
+<p><a href="https://en.wikipedia.org/wiki/API">API</a></p>
+</li>
+<li>
+<p><a href="https://en.wikipedia.org/wiki/Authentication">Автентифікація</a></p>
+</li>
+</ol>
+<h2 id="Короткий-зміст-1"><a class="header" href="#Короткий-зміст-1">Короткий зміст</a></h2>
+<ol>
+<li><a href="stakeholders-needs.html#%D1%85%D0%B0%D1%80%D0%B0%D0%BA%D1%82%D0%B5%D1%80%D0%B8%D1%81%D1%82%D0%B8%D0%BA%D0%B0-%D0%B4%D1%96%D0%BB%D0%BE%D0%B2%D0%B8%D1%85-%D0%BF%D1%80%D0%BE%D1%86%D0%B5%D1%81%D1%96%D0%B2">Характеристика ділових процесів</a>
+<ul>
+<li><a href="stakeholders-needs.html#SearchData">Виконання пошуку даних у системі</a></li>
+<li><a href="stakeholders-needs.html#DownloadData">Отримання даних із системи на пристрій користувача</a></li>
+<li><a href="stakeholders-needs.html#UploadData">Додавання нових даних до системи</a></li>
+<li><a href="stakeholders-needs.html#EditData">Редагування наявних даних у системі</a></li>
+<li><a href="stakeholders-needs.html#DeleteData">Видалення інформації із системи</a></li>
+</ul>
+</li>
+<li><a href="stakeholders-needs.html#ProductReview">Короткий огляд продукту</a></li>
+<li><a href="stakeholders-needs.html#Functionality">Функціональність</a></li>
+<li><a href="stakeholders-needs.html#Usability">Практичність</a></li>
+<li><a href="stakeholders-needs.html#Reliability">Надійність</a></li>
+<li><a href="stakeholders-needs.html#Productivity">Продуктивність</a></li>
+<li><a href="stakeholders-needs.html#Exploitation">Експлуатаційна придатність</a></li>
+</ol>
+<h2 id="Характеристика-ділових-процесів"><a class="header" href="#Характеристика-ділових-процесів">Характеристика ділових процесів</a></h2>
+<div class="table-wrapper"><table><thead><tr><th><strong>ID:</strong></th><th><span id="SearchData"> SearchData </span></th></tr></thead><tbody>
+<tr><td><strong>Назва сценарію:</strong></td><td>Виконання пошуку даних у системі</td></tr>
+<tr><td><strong>Учасники процесу:</strong></td><td>Користувач, Програмна система</td></tr>
+<tr><td><strong>Передумови:</strong></td><td>Система має базу даних, у якій зберігаються дані для пошуку</td></tr>
+<tr><td><strong>Очікуваний результат:</strong></td><td>Відображення результатів пошуку відповідно до запиту</td></tr>
+<tr><td><strong>Альтернативні сценарії:</strong></td><td>Відсутність результатів пошуку – DataNotFound</td></tr>
+<tr><td><strong>Покроковий сценарій:</strong></td><td>1. Користувач обирає функцію «Пошук» на початковій сторінці.<br/> 2. Користувач вводить текст пошукового запиту в спеціальне поле.<br/> 3. Користувач підтверджує введення, натискаючи кнопку «Пошук».<br/> 4. Система виконує пошук у базі даних відповідно до запиту.<br/> 5. Система демонструє результати пошуку користувачеві.</td></tr>
+</tbody></table>
+</div><div class="table-wrapper"><table><thead><tr><th><strong>ID:</strong></th><th><span id="DownloadData"> DownloadData </span></th></tr></thead><tbody>
+<tr><td><strong>Назва сценарію:</strong></td><td>Отримання даних із системи на пристрій користувача</td></tr>
+<tr><td><strong>Учасники процесу:</strong></td><td>Користувач, Програмна система</td></tr>
+<tr><td><strong>Передумови:</strong></td><td>Користувач успішно авторизувався в системі</td></tr>
+<tr><td><strong>Очікуваний результат:</strong></td><td>Дані успішно завантажено на пристрій користувача</td></tr>
+<tr><td><strong>Альтернативні сценарії:</strong></td><td>Помилка під час завантаження – DownloadError <br/> Відсутність даних для завантаження – DataDoesNotExist</td></tr>
+<tr><td><strong>Покроковий сценарій:</strong></td><td>1. Користувач натискає кнопку «Завантажити» на сторінці з обраними даними.<br/> 2. Користувач обирає потрібний формат файлу.<br/> 3. Користувач підтверджує вибір формату, натискаючи кнопку «Підтвердити».<br/> 4. Система формує файл у вибраному форматі.<br/> 5. Система забезпечує завантаження створеного файлу на пристрій користувача.</td></tr>
+</tbody></table>
+</div><div class="table-wrapper"><table><thead><tr><th><strong>ID:</strong></th><th><span id="UploadData"> UploadData </span></th></tr></thead><tbody>
+<tr><td><strong>Назва сценарію:</strong></td><td>Додавання нових даних до системи</td></tr>
+<tr><td><strong>Учасники процесу:</strong></td><td>Користувач, Програмна система</td></tr>
+<tr><td><strong>Передумови:</strong></td><td>Користувач увійшов до системи (авторизований)</td></tr>
+<tr><td><strong>Очікуваний результат:</strong></td><td>Дані успішно додані й збережені у системі</td></tr>
+<tr><td><strong>Альтернативні сценарії:</strong></td><td>Завантажений файл пошкоджений або непідтримуваного формату – InvalidData</td></tr>
+<tr><td><strong>Покроковий сценарій:</strong></td><td>1. Користувач натискає кнопку «Додати дані» на початковій сторінці системи.<br/> 2. Користувач обирає відповідний файл на власному пристрої.<br/> 3. Користувач підтверджує завантаження файлу, натиснувши кнопку «Додати».<br/> 4. Система виконує перевірку та обробку завантажених даних.<br/> 5. Система зберігає отримані дані до бази даних.</td></tr>
+</tbody></table>
+</div><div class="table-wrapper"><table><thead><tr><th><strong>ID:</strong></th><th><span id="EditData"> EditData </span></th></tr></thead><tbody>
+<tr><td><strong>Назва сценарію:</strong></td><td>Редагування наявних даних у системі</td></tr>
+<tr><td><strong>Учасники процесу:</strong></td><td>Користувач, Програмна система</td></tr>
+<tr><td><strong>Передумови:</strong></td><td>Користувач авторизований у системі<br/> Користувач має відповідні права для редагування інформації</td></tr>
+<tr><td><strong>Очікуваний результат:</strong></td><td>Інформація успішно оновлена в системі</td></tr>
+<tr><td><strong>Альтернативні сценарії:</strong></td><td>Дані мають некоректний формат – InvalidData</td></tr>
+<tr><td><strong>Покроковий сценарій:</strong></td><td>1. Користувач вибирає кнопку «Редагувати» на сторінці з потрібною інформацією.<br/> 2. Користувач вносить зміни до обраних даних.<br/> 3. Користувач підтверджує внесені зміни, натискаючи кнопку «Зберегти».<br/> 4. Система перевіряє та обробляє внесені зміни.<br/> 5. Система оновлює дані в базі.</td></tr>
+</tbody></table>
+</div><div class="table-wrapper"><table><thead><tr><th><strong>ID:</strong></th><th><span id="DeleteData"> DeleteData </span></th></tr></thead><tbody>
+<tr><td><strong>Назва сценарію:</strong></td><td>Видалення інформації із системи</td></tr>
+<tr><td><strong>Учасники процесу:</strong></td><td>Користувач, Програмна система</td></tr>
+<tr><td><strong>Передумови:</strong></td><td>Користувач авторизований у системі<br/> Користувач має дозвіл на видалення інформації</td></tr>
+<tr><td><strong>Очікуваний результат:</strong></td><td>Інформацію успішно видалено з бази даних</td></tr>
+<tr><td><strong>Альтернативні сценарії:</strong></td><td>Інформація, яку необхідно видалити, відсутня – DataDoesNotExist</td></tr>
+<tr><td><strong>Покроковий сценарій:</strong></td><td>1. Користувач обирає кнопку «Видалити» на сторінці з відповідними даними.<br/> 2. Користувач підтверджує видалення, натиснувши кнопку «Підтвердити».<br/> 3. Система виконує видалення інформації з бази.</td></tr>
+</tbody></table>
+</div>
+<h2 id="Короткий-огляд-продукту"><a class="header" href="#Короткий-огляд-продукту"><span id="ProductReview"> Короткий огляд продукту </span></a></h2>
+<p>Наша платформа для керування відкритими даними забезпечить користувачів зручними та потужними інструментами для роботи з великими масивами інформації, дозволяючи швидко отримувати необхідні дані.</p>
+<p>Система буде мати зручний і зрозумілий інтерфейс, а також низку переваг, які відсутні у багатьох сучасних аналогічних сервісах, зокрема:</p>
+<p>можливість входу до системи (авторизація);
+створення, редагування та оновлення інформації;
+ефективну візуалізацію інформації;
+наявність докладної документації та розділу поширених запитань (FAQ).</p>
+<p>Крім того, наша система забезпечуватиме актуальність інформації, а також можливість отримання зворотного зв'язку від користувачів.</p>
+<p>Відвідувачі зможуть легко знаходити необхідні їм дані, а після реєстрації отримають додаткові можливості — створювати запити для завантаження та зміни інформації.
+Також у системі передбачено роль адміністратора, який відповідатиме за управління та модерацію запитів користувачів.</p>
+<p>Далі наведено детальний опис моделі якості FURPS:</p>
+<h2 id="Функціональність"><a class="header" href="#Функціональність"><span id="Functionality"> Функціональність </span></a></h2>
+<p><em><strong>Гість:</strong></em></p>
+<ul>
+<li>Створення власного облікового запису для доступу до розширеного функціоналу, який недоступний звичайним відвідувачам.</li>
+<li>Перегляд загальнодоступної інформації без попередньої авторизації.</li>
+<li>Використання пошукових інструментів та фільтрів для пошуку інформації за ключовими словами, категоріями, датами та іншими параметрами.</li>
+</ul>
+<p><em><strong>Користувач:</strong></em></p>
+<ul>
+<li>Можливість комунікації та взаємодії з іншими учасниками системи.</li>
+<li>Додавання власних даних до системи, а також їх подальше редагування в спеціальному режимі.</li>
+<li>Завантаження даних із системи у вибраному користувачем форматі.</li>
+<li>Можливість графічної чи аналітичної візуалізації вибраних даних.</li>
+</ul>
+<p><em><strong>Адміністратор:</strong></em></p>
+<ul>
+<li>Управління доступом користувачів до системи, включаючи обмеження або блокування користувачів за порушення правил.</li>
+<li>Додавання, зміна або видалення будь-яких даних у системі, включаючи власну інформацію.</li>
+<li>Консультація та підтримка користувачів системи при виникненні проблем.</li>
+<li>Підготовка та оновлення технічної документації щодо роботи з системою.</li>
+</ul>
+<h2 id="Практичність"><a class="header" href="#Практичність"><span id="Usability"> Практичність </span></a></h2>
+<ul>
+<li>Інтуїтивно зрозумілий та зручний користувацький інтерфейс.</li>
+<li>Наявність довідкової інформації та інструкцій з використання.</li>
+<li>Можливість виконувати аналітичні операції з даними.</li>
+<li>Швидкий пошук та зручний доступ до інформації.</li>
+<li>Веб-застосунок, який працює без попереднього встановлення.</li>
+<li>Сумісність із різними операційними системами та пристроями.</li>
+<li>Дизайн, який адаптується під різні розміри екранів пристроїв.</li>
+</ul>
+<h2 id="Надійність"><a class="header" href="#Надійність"><span id="Reliability"> Надійність </span></a></h2>
+<ul>
+<li>Забезпечення надійного захисту даних від втрати та гарантія конфіденційності є основними пріоритетами роботи системи.</li>
+<li>Система стабільно працює навіть при високих навантаженнях та одночасному доступі великої кількості користувачів.</li>
+<li>Система оснащена засобами відновлення після технічних збоїв, що дозволяє уникати значних перерв у роботі та мінімізує незручності для користувачів.</li>
+<li>Регулярні оновлення забезпечують своєчасне усунення помилок, виправлення безпекових недоліків та впровадження нового функціоналу без негативного впливу на стабільність роботи системи.</li>
+</ul>
+<h2 id="Продуктивність"><a class="header" href="#Продуктивність"><span id="Productivity"> Продуктивність </span></a></h2>
+<ul>
+<li>Використання оптимізованих запитів та налаштування індексів у базі даних для забезпечення швидкого пошуку й отримання інформації.</li>
+<li>Кешування часто запитуваних даних, що дозволяє значно скоротити час відповіді системи на типові запити користувачів.</li>
+<li>Система розроблена з можливістю легкого масштабування, що забезпечує стабільну роботу навіть при збільшенні обсягів інформації та зростанні навантаження.</li>
+<li>Регулярний моніторинг процесів передачі й отримання інформації з метою швидкого виявлення і оперативного усунення потенційних проблем.</li>
+</ul>
+<h2 id="Експлуатаційна-придатність"><a class="header" href="#Експлуатаційна-придатність"><span id="Exploitation"> Експлуатаційна придатність </span></a></h2>
+<ul>
+<li>Зручна та чітко структурована документація, яка включає докладні пояснення функціоналу системи, інструкції з використання та практичні поради для користувачів.</li>
+<li>Наявність покрокових інструкцій та прикладів, які допомагають користувачам швидко освоїти можливості системи та ефективно ними користуватись.</li>
+<li>Інтерактивний модуль зворотного зв’язку, що дозволяє оперативно повідомляти про виявлені помилки або труднощі з подальшим швидким їх вирішенням.</li>
+<li>Програмний код системи побудований з урахуванням шаблонів проектування та відповідає стандартам чистого та зрозумілого коду.</li>
+<li>Розміщення вихідного коду системи на платформах для спільної роботи над проєктами, таких як GitHub.</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="Модель-прицедентів"><a class="header" href="#Модель-прицедентів">Модель прицедентів</a></h1>
+<h2 id="Загальна-схема"><a class="header" href="#Загальна-схема">Загальна схема</a></h2>
+<p><img src="//www.plantuml.com/plantuml/png/bPLDRjD0583tFiKetOH5Ru2Y9hLKHOf4f6XstGp9oB58nfN75XiMRQ822wGYG4LY0qSmfe4eDEKARsx46xyaSkmwXYwiyQlc-zxFZEESw4Y4KJoTE0x3Fp6CWf0ruAEvDLTcPjurpsAfeoSD9ZJBbkp85U6Bir1AjRVZ2poOIrXck-QGGcBUDBcM8MsrgwgTx-4Exiqjh3VEIzmxixHcUpJr5G6oPPwG8M8jXq9BrdZwlENPx0PIXCCnlh5pnU0hKjvYDYk6YWJMcDurWnyOHGyiu9xA6h2Zdk-DeyuabXLOtrFyOelz1WlpQPVgQqpxXa7Ap1No2OpbRD3ydzXTjML_CDVOYZjcvlky-ORNpVDAG5o7lS0BucZ7GmOHOLMU42GC__ThJmLBcbZlMNNgPAflzkFIRUFveCxW1Y_L912ZhUCpWbCBDpDy_aJI6jStUIDLiq1fcZqJKhbrAdxnVwAQqdZ_uA24FSwLaqggRiI1URLx-QFnkF1qB9GdxLtiot3gQ-q7IkzA9YKgu8yrGLfrPCxLeHGVDYred_9-RKOTeMmw-RP_Xz_8M94FcSkAD4ZIuRKELqva95qHYLohxI1HL9vhTODTjpHI-Y8U7xVmPfO2l1JfqYvRiOtOErO830hll5y8k8IWpw6DsBaNGzZvKgp3Yn6tm7hLoZmv8OOeVySvaMfaVoN-0W00" alt="Загальна схема" /></p>
+<h2 id="Гістьguest"><a class="header" href="#Гістьguest">Гість(Guest)</a></h2>
+<p><img src="//www.plantuml.com/plantuml/png/ZT3FIiD04CVnUvvYICzz0ob5X1BmLdBpigP3Meohx6xkrb3n80WgUzL7ADg2YFeCytiZDty2yI2uj_tEy3dCr3fbN7bUH165fp9tOIYMHtYiSOsxc9IbMSdMqUX8cREPOTRjRcavKvOfFZYTvFN6d9N9bk579vhaMRvnYqe-I7QobIzvnuRaBTG0oru-MtfEe-DLldI7HSb_iAjSfvSz-o9xFDK4hcIB6tZSaxmIri7lOFYEJlzb9xgt7x21bnsX-krLdPSClGPiBpCknfCm7XRJb7IO5arAecZAUb5V_0S0" alt="Гість" /></p>
+<h2 id="Користувачuser"><a class="header" href="#Користувачuser">Користувач(User)</a></h2>
+<p><img src="//www.plantuml.com/plantuml/png/bPJBQjj058RtVeh1NISF44h8HQ8RGmD2NdKpbGP7U38Jva9ALqtlkq8MANJHzX5KDsb2Bds6Cs_KSpG8XaHOr0ipEkUV__lFiT6ETTmuVoGd4uOVkspKCJVyYErMJfizNYqNHdjLxskf3SkuMJupGgX1iJQrCEk5fHNxt8g7lhDcSUZsf1V3ykYyNhfhZ3vvAEaqdCAnANo3l-4DN8VJy3QyWnMquTEKSKiG4vNUYWfnRFhqvJQUpKmlj7Vum5ue1cTuzqCuXmi6Du-je6NOksBXDDRX4kxWEW9cpzcJ9FS0gH3SL8SzwGVQVqRZ6mONqC8zWOUX28c8OeoGwHCbDQzxnbSqNf4vHctX3phTu_bBIepJN29qrNst4PMDeShZ_m2DZrOUZ07pkd4PTxn7_iJBvFuxcZq2HjzyT91vOpsNpMkHcf_Hpup6BTpI2RD-3ES3zlDH-q98KRdybHFADbhrWE_m2vVHfmxlkztSGKkxIIYefQTRGbyDxpW6AV8qI9UaH3hRy1lRzDzCAZLLYgHWg50U91L9bIpQq0etwyrEiYLeZjh6nXmRVgZHNoZohKPLqjV2JYOxsATNq3y0" alt="Користувач" /></p>
+<h2 id="Адміністраторadmin"><a class="header" href="#Адміністраторadmin">Адміністратор(Admin)</a></h2>
+<p><img src="//www.plantuml.com/plantuml/png/ZPFFhj9058VtFCM4kz75vG688L2Q61CM9D2Tcv5EeB6TciuqSScV6DrfNE3ATwW4f2BWAvnv8y_fb52J8fS5eMTcplVz3jEkqZpHQHGs6Wm_VABZX3NX2spXQDPmCckpC4ipXymiuMpcptf-5CZdJSOLAtwo1vSdRrycGaZR8bLYmfLWpHTlEfns3E9fd6fyOgybWw-Gcm_OUSiWkmM1Z65vpym2Sbg17HmXjyp1A_Om2AOpxOIfg0VsPrnEXQT4CXH952WLn59T-Dyi4X7mXqYmON0Wg4MP5MnGuoDakFj_YcSuMg6-Dxnhv719EbU737x0R-nni3picT_Gi137kyjmHIYqSBdcbL6ZVeQW7PmmmcTMF9xe7xWzODTzQXplNHXp_zzGTZGqNlkrfmaJ524P_AmnmSErqSsgy76y-z57GgFIE8Yk8_vEkR7Dfql3abje_CAqE-HL9A_g9RStSiPLC97B6_yOFdQAYrYj9LIZkr0j-bHql6effPBhsduKhfMsxCcsUA-5z9NTxU2AZolaqGxa94nzeSf3jKkDBXwc5_al" alt="Адміністратор" /></p>
+<h1 id="Діаграми-діяльності"><a class="header" href="#Діаграми-діяльності">Діаграми діяльності</a></h1>
+<div class="table-wrapper"><table><thead><tr><th><strong>ID:</strong></th><th><span id="SignIn"> SignIn </span></th></tr></thead><tbody>
+<tr><td><strong>НАЗВА:</strong></td><td>Вхід до системи</td></tr>
+<tr><td><strong>УЧАСНИКИ:</strong></td><td>Користувач (гість), Система</td></tr>
+<tr><td><strong>ПЕРЕДУМОВИ:</strong></td><td>Користувач має зареєстрований обліковий запис</td></tr>
+<tr><td><strong>РЕЗУЛЬТАТ:</strong></td><td>Користувач успішно увійшов до системи</td></tr>
+<tr><td><strong>ВИКЛЮЧНІ СИТУАЦІЇ:</strong></td><td>Некоректна електронна пошта — IncorrectEmail <br/> Некоректний пароль — IncorrectPassword</td></tr>
+<tr><td><strong>ОСНОВНИЙ СЦЕНАРІЙ:</strong></td><td>1. Користувач натискає кнопку «Увійти» на головній сторінці. <br/> 2. Вводить електронну пошту та пароль у форму входу. <br/> 3. Натискає кнопку «Підтвердити вхід». <br/> 4. Система перевіряє облікові дані. <br/> 5. Система повідомляє про успішний вхід.</td></tr>
+</tbody></table>
+</div>
+<p><img src="//www.plantuml.com/plantuml/png/XLB1ojDW4Bn_Jx7KguSUF3KYLR7WpLT8ar13qwHyIHKXXxPHgI08AZafHNo1MAt4f4bVOVUDdCr1vB_yXuzaPsTdPxvaccQkpJQhoAJBC5wxrbtHGoyBNuJPgqUkjrpOP1FxZvCeiHI5Y-VPFDe49kTFKifEzl8-DuE2Oyo4lt8bUwvbnmtUFXCU7VTyvKOA6l5tFad9VvGo8dGgufzejpWdxhH5giczRAK4y5PA1weVqUtv5zUwZlZCBKw3OWku0wyWlcBe0AWWARMgXcOBlaAlkKTzKU99tgYO5CxjVezIWhd7-ZF6OK39WuGsHeYSypST1txc2rSvD8zAHeceYF51LNl-0IibDzmhJ92gD2y4uYGBoEgzqftPx9u_7flxymV4Nq3zZQ2r3Wpne5y3QBYU67eQUucrWPSzMRbXz5_zp4tJbudrJH3xfE96BUbUjJoej6hgBiaxxlzbmItX4gwmVE1kmBbMkoWg1PoRNpnPEsQA7VXn_W80" alt="signInDiagram" /></p>
+<hr />
+<div class="table-wrapper"><table><thead><tr><th><strong>ID:</strong></th><th><span id="SignUp"> SignUp </span></th></tr></thead><tbody>
+<tr><td><strong>НАЗВА:</strong></td><td>Реєстрація в системі</td></tr>
+<tr><td><strong>УЧАСНИКИ:</strong></td><td>Користувач (гість), Система</td></tr>
+<tr><td><strong>ПЕРЕДУМОВИ:</strong></td><td>Користувач не має зареєстрованого облікового запису</td></tr>
+<tr><td><strong>РЕЗУЛЬТАТ:</strong></td><td>Обліковий запис користувача створено</td></tr>
+<tr><td><strong>ВИКЛЮЧНІ СИТУАЦІЇ:</strong></td><td>Пароль не відповідає вимогам — InvalidPassword <br/> Вказана електронна пошта недійсна — InvalidEmail</td></tr>
+<tr><td><strong>ОСНОВНИЙ СЦЕНАРІЙ:</strong></td><td>1. Користувач натискає кнопку «Зареєструватися» на головній сторінці. <br/> 2. Вводить електронну пошту та пароль у форму реєстрації. <br/> 3. Натискає кнопку «Підтвердити реєстрацію». <br/> 4. Система перевіряє введені дані. <br/> 5. Система надсилає лист-підтвердження на вказану електронну пошту. <br/> 6. Користувач підтверджує реєстрацію за посиланням у листі. <br/> 7. Система створює обліковий запис. <br/> 8. Система повідомляє про успішну реєстрацію.</td></tr>
+</tbody></table>
+</div>
+<p><img src="//www.plantuml.com/plantuml/png/XLDDRjDW4Dr_fnY52tJ1gaQeWAZ4ZYkuTLIiEdRbE4L8MIGrWYvG8q7aRa1LRs1CNTpys5UOkH5lR1SLOwcHeZYZzzxCUpFU6qTs64r6dXaVk_w97TeZUd4OkQTkzE6bVNXy50OJttaLU458ddlqBZhm9aD3xMVAtoIHkPp9bwcfbInZTla7ftB6XSnvXQSbuMVB9LUyafW6V8dYZ7DPrioPn9pT4sGn861JubyWhF7DU2i9tv5YkGGwGU6J91RwVEKCY1iGCG1n3aAE7j14UGjSJ5o1T8vIJ9BWdxPMPU2rz54bUOF7XnC1X0voQJtkvGhpt02GWJtJKHJS9tOnG3HJlWO2PSovuNGA_QkQc7C6p4mMsg7adnWmGQTIomJPL5E0W1z4Gmfr3_HaV_-fixDZdXqy9_uEw2ti5mq1fg5VeB3YOjVG6__KzbpdhJqUlmz2vs_XzSXsFJFq7LBXTdNmCrTkOtVT3eoL_8Pmn-ujvtNG2zxq9bWlyx7DMEQVEq8ctIuIox8trFvChskk7il5Vtd2sHsim6QbD48Lm4QXlSJFd5ewXS9raZhCTRERIXrWdBb68UVmaXEeRR_xDBezIptd1rtLi-cyFC69PVQm2hoBVm00" alt="signUpDiagram" /></p>
+<hr />
+<div class="table-wrapper"><table><thead><tr><th><strong>ID:</strong></th><th><span id="Logout"> Logout </span></th></tr></thead><tbody>
+<tr><td><strong>НАЗВА:</strong></td><td>Вихід з системи</td></tr>
+<tr><td><strong>УЧАСНИКИ:</strong></td><td>Користувач (гість), Система</td></tr>
+<tr><td><strong>ПЕРЕДУМОВИ:</strong></td><td>Користувач авторизований в системі</td></tr>
+<tr><td><strong>РЕЗУЛЬТАТ:</strong></td><td>Виконано вихід з облікового запису користувача</td></tr>
+<tr><td><strong>ВИКЛЮЧНІ СИТУАЦІЇ:</strong></td><td>Відсутні</td></tr>
+<tr><td><strong>ОСНОВНИЙ СЦЕНАРІЙ:</strong></td><td>1. Користувач натискає кнопку "Вийти" на головній сторінці. <br/> 2. Користувач натискає кнопку "Підтвердити". <br/> 3. Система завершує сеанс користувача. <br/> 4. Сиситема повідомляє про успішний вихід з облікового запису.</td></tr>
+</tbody></table>
+</div>
+<p><img src="//www.plantuml.com/plantuml/png/SYWkIImgAStDuIhEpimhI2nAp5LmJ2x9BCiigNHAJCvEByelpKjnpi_9BrB8oKpFA4dAAKtbKe226a1XL9EJ8Gn4zpt5X6F8niFeLZq02w5HsPaOKXCJGxn1HOZyq7A5DpVoZIxDbsz1sfbvFsyetf3r7hFMsgZ7WAXFbVlLB9sxm3iRZOsnyjO9ZuIC0wjwAV226Oi12c4_2huutFWDI1gmYEcQ0ukaZnhAyveziIC10oOc6maqVQQfy64ibXDsn8fIhuX_E6tLQqSxpYAjQgh-tmpH_7lBPoOyTspwJ28EOhDGfEOrQ8jagmbvipuOMF0j97oI44oRasphia_70sRacVBaBxszAztbzSqLt-e7" alt="logoutDiagram" /></p>
+<hr />
+<div class="table-wrapper"><table><thead><tr><th><strong>ID:</strong></th><th><span id="Search"> Search </span></th></tr></thead><tbody>
+<tr><td><strong>НАЗВА:</strong></td><td>Пошук даних за запитом</td></tr>
+<tr><td><strong>УЧАСНИКИ:</strong></td><td>Користувач, Система</td></tr>
+<tr><td><strong>ПЕРЕДУМОВИ:</strong></td><td>У системі наявна база даних для пошуку</td></tr>
+<tr><td><strong>РЕЗУЛЬТАТ:</strong></td><td>Відібрані за запитом дані відображено користувачу</td></tr>
+<tr><td><strong>ВИКЛЮЧНІ СИТУАЦІЇ:</strong></td><td>Дані не знайдено — DataNotFound</td></tr>
+<tr><td><strong>ОСНОВНИЙ СЦЕНАРІЙ:</strong></td><td>1. Користувач натискає кнопку «Пошук» на головній сторінці. <br/> 2. Вводить запит у пошуковий рядок. <br/> 3. Натискає кнопку «Знайти». <br/> 4. Система виконує пошук за введеним запитом. <br/> 5. Система виводить результати пошуку користувачу.</td></tr>
+</tbody></table>
+</div>
+<p><img src="//www.plantuml.com/plantuml/png/XP9FIiDG4CRtxnH3lK0NhXgH-eSklKFwXngQ9YLz5OGij05r8GeYBOWYtk1PgwQnZLUOToE_YG455GCXZvatl_c-cTI7setqgE-hOSyB1cxazcchfRq3JnzkkwrUDmf7GNidzCE8VA-xhvl-gAEeV6A-uTmUSMgFxTWcF6DZJsDLC1sbQdo7m5ZIdE5qJVYiEETtpcn25Rv7zHdgiWeXReYVa7p3E-ELdV22X2iTx0I14pjnmBn2DkSvfsXvJc2LZA8iHH6_ia4OURB9RnV0kmGWvypvN-DKbF52hbJWAUQ7Jxlyp4isCG1JdejO05Rs0e2lZeMKRtg0NJeg27M78XachJKQw-rgLMqqDublaNw1_LJcM53G8KK0kcgATbtjxeMw8GjHdQ1Dmb4o47GNDu_OX051J9IEZSoHa2qFsSzrsGIk_bnaE71K7StmXtm0" alt="searchDiagram" /></p>
+<hr />
+<div class="table-wrapper"><table><thead><tr><th><strong>ID:</strong></th><th><span id="Download"> Download </span></th></tr></thead><tbody>
+<tr><td><strong>НАЗВА:</strong></td><td>Завантажити дані з системи</td></tr>
+<tr><td><strong>УЧАСНИКИ:</strong></td><td>Користувач, Система</td></tr>
+<tr><td><strong>ПЕРЕДУМОВИ:</strong></td><td>Користувач авторизований у системі</td></tr>
+<tr><td><strong>РЕЗУЛЬТАТ:</strong></td><td>Дані завантажено на пристрій користувача</td></tr>
+<tr><td><strong>ВИКЛЮЧНІ СИТУАЦІЇ:</strong></td><td>Помилка завантаження - DownloadError <br/> Даних не існує - DataDoesNotExist</td></tr>
+<tr><td><strong>ОСНОВНИЙ СЦЕНАРІЙ:</strong></td><td>1. Користувач натискає кнопку "Завантажити" на сторінці з даними. <br/> 2. Користувач обирає формат файлу даних. <br/> 3. Користувач натискає кнопку "Підтвердити". <br/> 4. Система створює файл з даними. <br/> 5. Система завантажує дані на пристрій користувача. <br/> 6. Система повідомляє, що дані успішно завантажено.</td></tr>
+</tbody></table>
+</div>
+<p><img src="//www.plantuml.com/plantuml/png/XLBDpj905DtFKqm-jow-XIjg32gmz1qARR2XTCXqy2VfGgW_kj4DmSIeX3Uef6W1AQzmxXjvhpOO9KOsTEQUEJzdffqwtxhfE5RfA4ecllN7-kx0HOyYz_IUFnWDhPacmNqJ6wlZQFZGzUDfg7Jpo_01DJr3HJEQKuuD2dgLgP-Sdb8jVEADkOonvw-5vhyZQfomfrnVuJqAEOCZWmfyHINWAysOGWkbaDEInozfgV5DenGmAdn7vJ7zPtn1nVf2JSy5pHDMb4M17GwKdy_G2-__XbQiLZ9WWorpbOqXZf9X_IibjYAHCTLQSA99RqM-KRoqcHWNQYlTwHkztgtW-bhTxj_H-8YQ8nyOjf5q9zI2vuqzgfRI7VCuYOqVTAqrbfU-ypicJ1yOrtqIfKw5IQ25MhN-hf5oMZGUX5ZAnEbyIrBeZdDVNXmAQMY5MWoX53_Su3jQtDJq1lLlIXQOCUEINajvdFXFVMnbcqlxv_Cm4q-rEG2_kny0" alt="downloadDiagram" /></p>
+<hr />
+<div class="table-wrapper"><table><thead><tr><th><strong>ID:</strong></th><th><span id="Upload"> Upload </span></th></tr></thead><tbody>
+<tr><td><strong>НАЗВА:</strong></td><td>Завантажити дані в систему</td></tr>
+<tr><td><strong>УЧАСНИКИ:</strong></td><td>Користувач, Система</td></tr>
+<tr><td><strong>ПЕРЕДУМОВИ:</strong></td><td>Користувач авторизований у системі</td></tr>
+<tr><td><strong>РЕЗУЛЬТАТ:</strong></td><td>Дані завантажено в систему</td></tr>
+<tr><td><strong>ВИКЛЮЧНІ СИТУАЦІЇ:</strong></td><td>Файл не підтримується або пошкоджений - InvalidData</td></tr>
+<tr><td><strong>ОСНОВНИЙ СЦЕНАРІЙ:</strong></td><td>1. Користувач натискає кнопку "Додати дані" на головній сторінці. <br/> 2. Користувач обирає файл з даними на пристрої. <br/> 3. Користувач натискає кнопку "Додати". <br/> 4. Система обробляє дані. <br/> 5. Система завантажує дані в базу. <br/> 6. Система повідомляє, що дані успішно завантажено.</td></tr>
+</tbody></table>
+</div>
+<p><img src="//www.plantuml.com/plantuml/png/dLBBojfG4DxdAGQxxS95LwOKUq7eOqGZDXWJYL4ePA6czBBgHYAKNkWRnBHgD4ryXM_Ug7EY9Ehgvn_Gp6NETpcSziGtF7ywihN9q7B6XcUCw6NFjsQM__wLqHiEF7VgcAzTs_N8jWRl_AuzxMjqYG3VKF0SAIzuoI4InFmfgCObTbbLhHRXXomjrH4S9LkHV78KEE788JMmalplUOLKWfoZ1ibAJFWZiqn-YMhYG8fM2P0YvuySwTSyFx4Hbdd9mHyGuu2CiB-08iK_f1VSK-LXBd1h_N5o6thjDS3lCoAsmXC7Ty8KZyZB-2klAfSrhUFwVVBKTTEJJkUPsMpAg8xdtHU4xoYmGuOK2KTYGKen98qZqfP6T_7McHcsPRunVAEQzHspPBhMjXOfIIbdAVyx3g_q4HB2Hl8zXpTNz0k54Y5xIaDfwYdn5nJrKG5QuCGHVqQk-ljR7cnLMzSUzAZSiQwrHRoysly0" alt="uploadDiagram" /></p>
+<hr />
+<div class="table-wrapper"><table><thead><tr><th><strong>ID:</strong></th><th><span id="EditData"> EditData </span></th></tr></thead><tbody>
+<tr><td><strong>НАЗВА:</strong></td><td>Змінити дані в системі</td></tr>
+<tr><td><strong>УЧАСНИКИ:</strong></td><td>Користувач, Система</td></tr>
+<tr><td><strong>ПЕРЕДУМОВИ:</strong></td><td>Користувач авторизований у системі <br/> Користувач має право на редагування даних <br/> Відкрито сторінку з даними</td></tr>
+<tr><td><strong>РЕЗУЛЬТАТ:</strong></td><td>Дані змінено</td></tr>
+<tr><td><strong>ВИКЛЮЧНІ СИТУАЦІЇ:</strong></td><td>Неправильний формат змінених даних - InvalidData</td></tr>
+<tr><td><strong>ОСНОВНИЙ СЦЕНАРІЙ:</strong></td><td>1. Користувач натискає кнопку "Змінити" на сторінці з даними. <br/> 2. Користувач вносить необхідні зміни. <br/> 3. Користувач натискає кнопку "Зберегти". <br/> 4. Система обробляє дані. <br/> 5. Система зберігає змінені дані. <br/> 6. Система повідомляє, що дані успішно змінено.</td></tr>
+</tbody></table>
+</div>
+<p><img src="//www.plantuml.com/plantuml/png/bPBBIiDG48RtVOf3tRhembKZKYyKV8oqAJKqJKgQ5eGiQeiNGH148eWNV8Fq4WrjJL_XdpTo9jMqnOsUJKxcyit_3wVKzdJNwpIjNBjXsYtTrPjgl-gPNTCxFT2hZRhhT6pZqB4SLrbc_SIhM9rQJdqV7uz8g8UOpgXF0umGqgMVfLDs-fU5YWhFNDIN5apvTg_uyua42qnfeF9um9m2ZiHIb5Ty2vNWPP0aw882XG-52K8fmnonjiw_4npJ6K0tqXynVKZdt3pXTcd-6Q7zIzSG4NkDC4wLQIjZFjwMA-3a7A6_JdtXqJqHW1dT2ZMLJS5gjEruDUNARjLMkRnZ50gIoivkPK_XYGdlc276I0mia8Xj3amH5pVAvHpRNTqoZIFTqxDSpJRIIUlQbfPagsDnl5fC90f_IvMULoIYWNCY8VMqhUWQILQkQC0xN510LxB03IeIWVtXuJWjBLTYpV8olm00" alt="editDataDiagram" /></p>
+<hr />
+<div class="table-wrapper"><table><thead><tr><th><strong>ID:</strong></th><th><span id="VisualizeData"> VisualizeData </span></th></tr></thead><tbody>
+<tr><td><strong>НАЗВА:</strong></td><td>Відобразити дані</td></tr>
+<tr><td><strong>УЧАСНИКИ:</strong></td><td>Користувач, Система</td></tr>
+<tr><td><strong>ПЕРЕДУМОВИ:</strong></td><td>Користувач авторизований у системі <br/> Відкрито сторінку з даними</td></tr>
+<tr><td><strong>РЕЗУЛЬТАТ:</strong></td><td>Дані відображено</td></tr>
+<tr><td><strong>ВИКЛЮЧНІ СИТУАЦІЇ:</strong></td><td>Обраний формат візуалізації недоступний - InvalidVisualizationType <br/> Дані неможливо візуалізувати - InvalidVisualizationData</td></tr>
+<tr><td><strong>ОСНОВНИЙ СЦЕНАРІЙ:</strong></td><td>1. Користувач натискає кнопку "Відобразити" на сторінці з даними. <br/> 2. Користувач обирає формат візуалізації даних. <br/> 3. Користувач натискає кнопку "Підтвердити". <br/> 4. Система створює візуалізацію у вибраному форматі. <br/> 5. Система відображає дані користувачу.</td></tr>
+</tbody></table>
+</div>
+<p><img src="//www.plantuml.com/plantuml/png/bLB9Ql9G5DxdAGx-B-3YNvbIx83GVUd-Qe8DnaJYZM39mcg7dOjIB9GE-0PH78A3liAvRzHpqX0ZfM3lvWxtEz_tdQ7ObCAJVjtMcZNBQGXFrE6a8gsM9TkdebAhUgxl66UkxNfWMzLhMRPzKuDa1VYA6zN1IDsghkhX64Fr6AJVCNTyIvyAWEy4wd88BkZq3BIjSODRNAWUvF193N12zn7nXZWd885pG9WGM8O52R9M3se0E0S2X_GPuGeZFQlpWICAxiGQwYxskM9fm375pybkY4i-OSXSwYMbKlVw7mn_ic42Z75A4fF4iBxBEy3XTuLmoWw2BFSm3kIK-iJyYxC-a131egGehBwYfsnMQh3pxBZI18-x1VzAfVz6Ffz-yJeg7mE-4SSCbnYn9k2MAUcofEIY0i7truNJ4hPbN5bDd_OR8ItNkMmtp8E0vqAA56WwHkmlMuJzbi-uo4alsDhYvuYfdguTD7zkGzUA9Ca3_WK0" alt="visualizeDataDiagram" /></p>
+<hr />
+<div class="table-wrapper"><table><thead><tr><th><strong>ID:</strong></th><th><span id="DeleteData"> DeleteData </span></th></tr></thead><tbody>
+<tr><td><strong>НАЗВА:</strong></td><td>Видалити дані з системи</td></tr>
+<tr><td><strong>УЧАСНИКИ:</strong></td><td>Адміністратор, Система</td></tr>
+<tr><td><strong>ПЕРЕДУМОВИ:</strong></td><td>Адміністратор авторизований у системі</td></tr>
+<tr><td><strong>РЕЗУЛЬТАТ:</strong></td><td>Дані видалено</td></tr>
+<tr><td><strong>ВИКЛЮЧНІ СИТУАЦІЇ:</strong></td><td>Даних не існує - DataDoesNotExist</td></tr>
+<tr><td><strong>ОСНОВНИЙ СЦЕНАРІЙ:</strong></td><td>1. Адміністратор натискає кнопку "Видалити" на сторінці з даними. <br/> 2. Адміністратор натискає кнопку "Підтвердити". <br/> 3. Система видаляє дані з бази. <br/> 4. Система повідомляє, що дані успішно видалено.</td></tr>
+</tbody></table>
+</div>
+<p><img src="//www.plantuml.com/plantuml/png/bP9FJi9G4CRtFSK4jovOkAB6e29Bxr2WmORIHzg7qOG5VnAZAuqnNMc8DwYaI8CKhZ1p8-TDIEcMsVIzwPVVzysqzKWxeHxsVIlgUS702Pq-NBQrT-_fnokdtUk6QXXqhfMlGl2zxfrk-KFN0guHlc6A6uenfvWcDAKn9ZJ5BOr7HY0bzE9M0_mIJKOJNFFf0_YHunPtkAOPLF0TCuOc-CSIbbM0toR0TE6ArnF5W2iGMSxo3MRs4GvpXgGiME2I0wTx7ti_qZTcOhPaR38gOujaz6gWuhvFyiFdLJb5eBGBeTaMd3IRPvrgrO9IdRSk03yvqw-P4nS6i-ChJyADDMOraPUhuMYdeTpeLkcR1oywhDGDEc9NZZfd5aCn5QO4FWLwmUqXDiruFpkAwHbpqryKUr-QXdtC5rO3swfp3lCJ_GC0" alt="deleteDataDiagram" /></p>
+<hr />
+<div class="table-wrapper"><table><thead><tr><th><strong>ID:</strong></th><th><span id="BanUser"> BanUser </span></th></tr></thead><tbody>
+<tr><td><strong>НАЗВА:</strong></td><td>Заблокувати користувача</td></tr>
+<tr><td><strong>УЧАСНИКИ:</strong></td><td>Адміністратор, Система</td></tr>
+<tr><td><strong>ПЕРЕДУМОВИ:</strong></td><td>Адміністратор авторизований</td></tr>
+<tr><td><strong>РЕЗУЛЬТАТ:</strong></td><td>Обліковий запис користувача заблоковано</td></tr>
+<tr><td><strong>ВИКЛЮЧНІ СИТУАЦІЇ:</strong></td><td>Користувача не існує - UserNotFound <br/> Користувач вже заблокований - UserAlreadyBanned</td></tr>
+<tr><td><strong>ОСНОВНИЙ СЦЕНАРІЙ:</strong></td><td>1. Адміністратор натискає кнопку "Управління користувачами" на головній сторінці. <br/> 2. Адміністратор вводить ім'я користувача в пошуковий рядок. <br/> 3. Адміністратор натискає кнопку "Знайти". <br/>  4. Система здіснює пошук за запитом. <br/> 5. Система відображає шуканого користувача. <br/> 6. Адміністратор натискає кнопку "Заблокувати". <br/> 7. Адміністратор виставляє таймер блокування. <br/> 8. Адміністратор натискає кнопку "Підтвердити". <br/> 9. Система блокує користувача на вказаний період. <br/> 10. Система повідомляє, що користувача успішно заблоковано.</td></tr>
+</tbody></table>
+</div>
+<p><img src="//www.plantuml.com/plantuml/png/bLJDRjD06BpdAJw50nSEFN1g46f1of4R3v0sLecQsfNZ827baBGI50aHGCYzW2h42xWc1STnx5UOVIDcFvkwbeWWA-N7k-FvPhvlj7kZeES7uvEXj4R70_Uqv_TEPFym6BmS1A-Uz0wFZtnlxFQVUaFFb-7Ww4LmC1mxBU6Qu0CMo4o8jGdDp9oPAI9pXjnC9mgmI-drwNPhL_1LWOcP8UM_pyAVDN8KICsvjF4TXUL2Z9Lb9__SGaYCH0kTyoWoRmZ9aBI5a4ZmWmmhVcAh1qiXKiMemDScxDnLy8cmdF8JihqJGhBx6ui8Oa71amlkfLeX8J-PvsJ8aNQsy7PfnM9f8UtolQgPtygokA6dQ7ANyH8Bss2wU4--MedW5oBzubvYpI9hcZIX2hpMRlvKEPM9I4MnPHiyrpok5pZYsydBlMxtONzdXqVrUdJmMF05EUbNI12RK1NQmN0ZHR9BU7Cz7pd-Co_esc3zzN1_w3kzFkFdkawDSDo-YhdT-6SAjnfBX6kDJrerGGVKZ8psgChbd1pwiAJL6pELvkjbQhS9nfKT5W6nPTDarWh-AoOV_zGdzwOWhpNDLe36Pgr1Hc5BidoEHKFnbSrwbQ6izFn0pDkDeH7Mdg7W72wiDKQpxggbAbFNsURsy4uxhJrEdZTKwpS0" alt="banUserDiagram" /></p>
+<div style="break-before: page; page-break-before: always;"></div><p>В рамках проекту розробляється:</p>
+<ul>
+<li><a href="design.html#BusinessModel">Модель бізнес-об'єктів</a></li>
+<li><a href="design.html#ERModel">ER-модель</a></li>
+<li><a href="design.html#RelationalSchema">Реляційна схема</a></li>
+</ul>
+<p><span id="BusinessModel"></span></p>
+<h2 id="Модель-бізнес-обєктів"><a class="header" href="#Модель-бізнес-обєктів">Модель бізнес-об'єктів</a></h2>
+<p><strong>Модель бізнес-об'єктів</strong> — це уявне або формальне представлення сутностей, класів чи інформаційних об'єктів, пов’язаних із певною предметною областю. Вона містить властивості (атрибути), які описують ці об’єкти, а також відображає взаємозв’язки між ними, показуючи, як саме ці елементи взаємодіють у рамках системи.</p>
+<p><img src="//www.plantuml.com/plantuml/png/XPFFRi8m3CRlF4NLtT0w3Uso0qAmqGFInW4LQJj6JK3HsWGbgH1llxJMt3-UjnFKly-ndNnU-o1SQEfgfapGuPOSlNB9SfdlYrtnkLebTq-dvqLPpf9a87ZGCchsn_UN_10r4tZIpWSZQXKrHVvHK4Kb_X6eMkYAJxTdRLXw4TvVhPC3GQyus4fnuw606m_WfF6URifIUS-VZfBn-OCJjY88BXy5N7S0HzrDc5I-TFeIj3MSn5wDShk_2foigqN0_2akhGdnc-TEYQ3afbLiDqLE5Sr54aKlASIPkI7ap0K1Or_lDHOzMtTZJX-Bs18eOEkyQVFrMuqeWUMRPp8REvaGs00IXhKXOLmtId1LATAoxQXrV0msMUzz4WKfcBSDPfDtf0nTG1WwY12q7W7eMa96bgSKng5Xc0TsDSQh68SF8AsFkej2GqrY84ClG7pa39vgEMJfu_qYJRBCjl_cAG8qIxg8WjWvOEZovu60oJ73mU34E5mdwmR7LuJC2Z8xnqRI_aoIugoO0qG2wHjTAoERkle6" alt="Реляційна схема" /></p>
+<p><span id="ERModel"></span></p>
+<h2 id="er-модель"><a class="header" href="#er-модель">ER-модель</a></h2>
+<p><strong>ER-модель</strong> (модель "сутність-зв’язок") — це концептуальна модель даних, яка використовується для опису структури даних. Вона дозволяє уявити, які об’єкти (сутності) існують у певній системі, які властивості (атрибути) вони мають та як ці об’єкти пов’язані між собою (зв’язки). Це своєрідна метамодель, тобто інструмент, що дозволяє будувати інші моделі даних. ER-модель є універсальним способом представлення інформації, незалежним від конкретного програмного забезпечення чи системи керування базами даних.</p>
+<p><img src="//www.plantuml.com/plantuml/png/dP91Qpen4CNF_toAiF-RLT2Jq9EsUcjxa1LwAzFDk8Hc4qbc4Idzxet3riqsb0Kz1FczUNcpara50azjOuGGQ4dJMUu3Uld_VQcMkFmKClxkj9BtycN__B3TIIO7xGDPQ33oSljQCZn222VdLSeCv7NOW3Q38bThcmBnTUrcvmoETPC6zCvrLM48Ozuse7_Bg8-fELL0CAHzsYPgOraL4DREdzCxM50OAg-FfDrW3EvaVpNtZtdb4GZLcgAmMPTRXkrHvR1obj1IUkd1-GPwykVuIgXlc_jZzvMtkP-q_HXpPk_0bA3E7eTtkPXFvQIOcLcnc2wAdxqGl5cTvWUQw4gYMCnK9_432pxP9FiRkMV1vmMmC9dAUS53P0yBdCE1_P34zLzKOYVjfMAH5eWLMjKsvXi0" alt="ERModel" /></p>
+<p><span id="RelationalSchema"></span></p>
+<h2 id="Реляційна-схема"><a class="header" href="#Реляційна-схема">Реляційна схема</a></h2>
+<p><strong>Реляційна схема</strong> — Це структуроване відображення даних у базі даних, що описує спосіб їх організації та взаємозв’язків. Інакше кажучи, це схема або структура даних, яка включає відомості про наявні таблиці (відношення), їхні атрибути (стовпці), а також про зв’язки між цими таблицями.</p>
+<p><img src="img/opendatareletiontable.jpg" alt="RelationalSchema" /></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="Реалізація-інформаційного-та-програмного-забезпечення"><a class="header" href="#Реалізація-інформаційного-та-програмного-забезпечення">Реалізація інформаційного та програмного забезпечення</a></h1>
+<h2 id="sql-скрипт-для-створення-на-початкового-наповнення-бази-даних"><a class="header" href="#sql-скрипт-для-створення-на-початкового-наповнення-бази-даних">SQL-скрипт для створення на початкового наповнення бази даних</a></h2>
+<pre><code class="language-mysql">-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+-- -----------------------------------------------------
+-- Schema opendata
+-- -----------------------------------------------------
+DROP SCHEMA IF EXISTS `opendata` ;
+
+-- -----------------------------------------------------
+-- Schema opendata
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `opendata` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ;
+USE `opendata` ;
+
+-- -----------------------------------------------------
+-- Table `opendata`.`role`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `opendata`.`role` ;
+
+CREATE TABLE IF NOT EXISTS `opendata`.`role` (
+  `role_id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`role_id`),
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `opendata`.`category`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `opendata`.`category` ;
+
+CREATE TABLE IF NOT EXISTS `opendata`.`category` (
+  `category_id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  `parent_categoty_id` INT NULL DEFAULT NULL,
+  PRIMARY KEY (`category_id`),
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE,
+  INDEX `parent_category_idx` (`parent_categoty_id` ASC) VISIBLE,
+  CONSTRAINT `parent_category`
+    FOREIGN KEY (`parent_categoty_id`)
+    REFERENCES `opendata`.`category` (`parent_categoty_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `opendata`.`data`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `opendata`.`data` ;
+
+CREATE TABLE IF NOT EXISTS `opendata`.`data` (
+  `data_id` INT NOT NULL AUTO_INCREMENT,
+  `category_id` INT NOT NULL,
+  `description` LONGTEXT NULL DEFAULT NULL,
+  `createdAt` DATETIME NOT NULL,
+  `updatedAt` DATETIME NOT NULL,
+  `content` VARCHAR(45) NOT NULL,
+  `format` VARCHAR(45) NOT NULL,
+  `name` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`data_id`, `category_id`),
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE,
+  INDEX `fk_data_category_idx` (`category_id` ASC) VISIBLE,
+  CONSTRAINT `fk_data_category`
+    FOREIGN KEY (`category_id`)
+    REFERENCES `opendata`.`category` (`category_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `opendata`.`user`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `opendata`.`user` ;
+
+CREATE TABLE IF NOT EXISTS `opendata`.`user` (
+  `user_id` INT NOT NULL AUTO_INCREMENT,
+  `firstname` VARCHAR(45) NOT NULL,
+  `password` VARCHAR(45) NOT NULL,
+  `lastname` VARCHAR(45) NOT NULL,
+  `email` VARCHAR(45) NOT NULL,
+  `login` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`user_id`),
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE,
+  UNIQUE INDEX `login_UNIQUE` (`login` ASC) VISIBLE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `opendata`.`access`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `opendata`.`access` ;
+
+CREATE TABLE IF NOT EXISTS `opendata`.`access` (
+  `access_id` INT NOT NULL AUTO_INCREMENT,
+  `user_id` INT NOT NULL,
+  `role_id` INT NOT NULL,
+  `data_id` INT NOT NULL,
+  PRIMARY KEY (`access_id`, `user_id`, `role_id`, `data_id`),
+  INDEX `fk_Access_Data_idx` (`data_id` ASC) VISIBLE,
+  INDEX `fk_Access_Role_idx` (`role_id` ASC) VISIBLE,
+  INDEX `fk_Access_User_idx` (`user_id` ASC) VISIBLE,
+  CONSTRAINT `fk_Access_Data`
+    FOREIGN KEY (`data_id`)
+    REFERENCES `opendata`.`data` (`data_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Access_Role`
+    FOREIGN KEY (`role_id`)
+    REFERENCES `opendata`.`role` (`role_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Access_User`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `opendata`.`user` (`user_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `opendata`.`tag`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `opendata`.`tag` ;
+
+CREATE TABLE IF NOT EXISTS `opendata`.`tag` (
+  `tag_id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`tag_id`),
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `opendata`.`link`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `opendata`.`link` ;
+
+CREATE TABLE IF NOT EXISTS `opendata`.`link` (
+  `link_id` INT NOT NULL AUTO_INCREMENT,
+  `data_id` INT NOT NULL,
+  `tag_id` INT NOT NULL,
+  PRIMARY KEY (`link_id`, `data_id`, `tag_id`),
+  INDEX `fk_link_data_idx` (`data_id` ASC) VISIBLE,
+  INDEX `fk_link_tag_idx` (`tag_id` ASC) VISIBLE,
+  CONSTRAINT `fk_link_data`
+    FOREIGN KEY (`data_id`)
+    REFERENCES `opendata`.`data` (`data_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_link_tag`
+    FOREIGN KEY (`tag_id`)
+    REFERENCES `opendata`.`tag` (`tag_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+-- -----------------------------------------------------
+-- Data for table `opendata`.`role`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `opendata`;
+INSERT INTO `opendata`.`role` (`role_id`, `name`) VALUES (DEFAULT, 'User');
+INSERT INTO `opendata`.`role` (`role_id`, `name`) VALUES (DEFAULT, 'Admin');
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `opendata`.`category`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `opendata`;
+INSERT INTO `opendata`.`category` (`category_id`, `name`, `parent_categoty_id`) VALUES (DEFAULT,, 'Informatics', NULL);
+INSERT INTO `opendata`.`category` (`category_id`, `name`, `parent_categoty_id`) VALUES (DEFAULT,, 'Statistics', NULL);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `opendata`.`data`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `opendata`;
+INSERT INTO `opendata`.`data` (`data_id`, `category_id`, `description`, `createdAt`, `updatedAt`, `content`, `format`, `name`) VALUES (DEFAULT,, 1, 'Important tasks', '2023-02-15 15:15:15', '2023-03-15 15:15:15', 'txt', 'txt', 'Informatics');
+INSERT INTO `opendata`.`data` (`data_id`, `category_id`, `description`, `createdAt`, `updatedAt`, `content`, `format`, `name`) VALUES (DEFAULT,, 2, 'Important statistics', '2024-04-18 13:17:09', '2024-04-19 13:17:09', 'xlsx', 'xlsx', 'Statistics');
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `opendata`.`user`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `opendata`;
+INSERT INTO `opendata`.`user` (`user_id`, `firstname`, `password`, `lastname`, `email`, `login`) VALUES (DEFAULT, 'Vlad', '1234', 'Koleso', 'vald_koleso@gmail.com', 'vlad');
+INSERT INTO `opendata`.`user` (`user_id`, `firstname`, `password`, `lastname`, `email`, `login`) VALUES (DEFAULT, 'Daria', '5678', 'Minze', 'minze@gmail.com', 'minze');
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `opendata`.`access`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `opendata`;
+INSERT INTO `opendata`.`access` (`access_id`, `user_id`, `role_id`, `data_id`) VALUES (DEFAULT, 1, 1, 1);
+INSERT INTO `opendata`.`access` (`access_id`, `user_id`, `role_id`, `data_id`) VALUES (DEFAULT, 2, 2, 2);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `opendata`.`tag`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `opendata`;
+INSERT INTO `opendata`.`tag` (`tag_id`, `name`) VALUES (DEFAULT, 'informatics');
+INSERT INTO `opendata`.`tag` (`tag_id`, `name`) VALUES (DEFAULT,, 'statistics');
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `opendata`.`link`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `opendata`;
+INSERT INTO `opendata`.`link` (`link_id`, `data_id`, `tag_id`) VALUES (DEFAULT, 1, 1);
+INSERT INTO `opendata`.`link` (`link_id`, `data_id`, `tag_id`) VALUES (DEFAULT, 2, 2);
+
+COMMIT;
+
+</code></pre>
+<h2 id="restfull-сервіс-для-управління-даними"><a class="header" href="#restfull-сервіс-для-управління-даними">RESTfull сервіс для управління даними</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="Тестування-працездатності-системи"><a class="header" href="#Тестування-працездатності-системи">Тестування працездатності системи</a></h1>
+<h1 id="Запуск-сервера"><a class="header" href="#Запуск-сервера">Запуск сервера</a></h1>
+<pre><code class="language-bash">uvicorn main:app --reload
+</code></pre>
+<h1 id="Можливі-запити"><a class="header" href="#Можливі-запити">Можливі запити</a></h1>
+<p><img src="https://github.com/user-attachments/assets/aab09083-4cf4-4337-bde4-5ff6cd671b81" alt="image" /></p>
+<h2 id="Метод-get-для-таблиць-role-та-tag-Отримати-дані-з-таблиці"><a class="header" href="#Метод-get-для-таблиць-role-та-tag-Отримати-дані-з-таблиці">Метод GET для таблиць Role та Tag (Отримати дані з таблиці)</a></h2>
+<p><img src="https://github.com/user-attachments/assets/bde16978-7ed5-4920-8d21-624350db8bfe" alt="image" /></p>
+<p><img src="https://github.com/user-attachments/assets/6727d4c4-0b17-4b4b-bf98-99d1de559c63" alt="image" /></p>
+<h2 id="Метод-post-для-таблиць-role-та-tag-Додати-дані-до-таблиці"><a class="header" href="#Метод-post-для-таблиць-role-та-tag-Додати-дані-до-таблиці">Метод POST для таблиць Role та Tag (Додати дані до таблиці)</a></h2>
+<p><img src="https://github.com/user-attachments/assets/9a8831bb-e6c3-417a-bb82-df63beec8568" alt="image" /></p>
+<p><img src="https://github.com/user-attachments/assets/9e409fa7-633c-4769-93cc-97568ef49022" alt="image" /></p>
+<h2 id="Метод-put-для-таблиць-role-та-tag-Змінити-дані-в-таблиці"><a class="header" href="#Метод-put-для-таблиць-role-та-tag-Змінити-дані-в-таблиці">Метод PUT для таблиць Role та Tag (Змінити дані в таблиці)</a></h2>
+<p><img src="https://github.com/user-attachments/assets/6e182563-6b90-4c8a-86da-966b5d1ca1ec" alt="image" /></p>
+<p><img src="https://github.com/user-attachments/assets/07d9a476-9765-43cb-b29d-16e0022c05a2" alt="image" /></p>
+<h2 id="Метод-delete-для-таблиць-role-та-tag-Видалити-дані-з-таблиці"><a class="header" href="#Метод-delete-для-таблиць-role-та-tag-Видалити-дані-з-таблиці">Метод DELETE для таблиць Role та Tag (Видалити дані з таблиці)</a></h2>
+<p><img src="https://github.com/user-attachments/assets/738108ee-f8c5-4863-ab75-173ac7127506" alt="image" /></p>
+<p><img src="https://github.com/user-attachments/assets/e3a52c67-9de8-40f8-992d-a1ed36075283" alt="image" /></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="Висновки-1"><a class="header" href="#Висновки-1">Висновки</a></h1>
+<p>У висновках наводять оцінку отриманих результатів, можливі галузі його використання. Висновки повинні містити в собі коротку узагальнену оцінку результатів розробки, у
+тому числі і з погляду на їх технічно-економічну ефективність. Необхідно порівняти
+отримані результати усіх характеристик об’єкта проєктування із завданням і з основними показниками сучасних аналогічних об’єктів.</p>
+<p>Необхідно вказати яке нове технічне рішення покладене в основу проєкту і у чому її
+переваги, що нового було запропоновано самим студентом.</p>
+<p>На базі отриманих висновків можуть надаватися рекомендації по використанню розробки. Вони повинні
+мати конкретний характер і бути цілком підтверджені проєктом.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+        <script>
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+    </div>
+    </body>
+</html>
